@@ -23,7 +23,7 @@
     <link rel="shortcut icon" href="{{asset('source/assets/frontend/img/faviconShopPv.ico')}}">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
-    
+
     <!-- <link rel="stylesheet" type="text/css" href="https://cdn.speed.family/main.css" media="screen" title="style (screen)" /> -->
    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> <i class="material-icons">computer</i>-->
 
@@ -92,44 +92,44 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li 
+            <li
                 class="
-                @if (Request::url() == route('quanlynguoidung') || Request::url() == route('quanlynguoidung_user') || Request::url() == route('quanlynguoidung_ad')) nav-item active  
-                @else nav-item 
+                @if (Request::url() == route('quanlynguoidung') || Request::url() == route('quanlynguoidung_user') || Request::url() == route('quanlynguoidung_ad')) nav-item active
+                @else nav-item
                 @endif">
                 <a class="nav-link collapsed" data-toggle="collapse" href="{{route('quanlynguoidung')}}" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseUser">
                     <i class="fas fa-users-cog"></i>
                     <span>{{ trans('home_ad.ql_tk') }}</span>
                 </a>
-                <div 
-                    id="collapseUser" 
+                <div
+                    id="collapseUser"
                     class="
-                        @if(Request::url() == route('quanlynguoidung') || Request::url() == route('quanlynguoidung_user') || Request::url() == route('quanlynguoidung_ad')) 
-                            collapse show  
+                        @if(Request::url() == route('quanlynguoidung') || Request::url() == route('quanlynguoidung_user') || Request::url() == route('quanlynguoidung_ad'))
+                            collapse show
                         @else collapse
-                        @endif" 
-                    aria-labelledby="headingUtilities" 
+                        @endif"
+                    aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">{{ trans('home_ad.ql_tk') }}:</h6>
-                    <a 
+                    <a
                         class="
-                        @if (Request::url() == route('quanlynguoidung')) collapse-item active  
-                        @else collapse-item 
+                        @if (Request::url() == route('quanlynguoidung')) collapse-item active
+                        @else collapse-item
                         @endif" href="{{route('quanlynguoidung')}}"
                         >Tất Cả Tài Khoản
                     </a>
-                    <a 
+                    <a
                         class="
-                        @if (Request::url() == route('quanlynguoidung_user')) collapse-item active  
-                        @else collapse-item 
+                        @if (Request::url() == route('quanlynguoidung_user')) collapse-item active
+                        @else collapse-item
                         @endif" href="{{route('quanlynguoidung_user')}}"
                     >Tài Khoản Khách Hàng
                     </a>
-                    <a 
+                    <a
                         class="
-                        @if (Request::url() == route('quanlynguoidung_ad')) collapse-item active  
-                        @else collapse-item 
+                        @if (Request::url() == route('quanlynguoidung_ad')) collapse-item active
+                        @else collapse-item
                         @endif" href="{{route('quanlynguoidung_ad')}}">
                     Tài Khoản Admin
                     </a>
@@ -140,43 +140,43 @@
 
 
             <!-- Nav Item - Tables -->
-            <li 
-                class="                
-                @if(Request::url() == route('donhang') || Request::url() == route('donhang_chuaduyet') || Request::url() == route('donhang_daduyet') || Request::url() == route('donhang_huy')) nav-item active  
-                @else nav-item 
+            <li
+                class="
+                @if(Request::url() == route('donhang') || Request::url() == route('donhang_chuaduyet') || Request::url() == route('donhang_daduyet') || Request::url() == route('donhang_huy')) nav-item active
+                @else nav-item
                 @endif">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-shopping-cart"></i>
                     <span>{{ trans('home_ad.ql_dh') }}</span>
                 </a>
-                <div id="collapseUtilities" 
+                <div id="collapseUtilities"
                     class="
-                        @if(Request::url() == route('donhang') || Request::url() == route('donhang_chuaduyet') || Request::url() == route('donhang_daduyet') || Request::url() == route('donhang_huy')) collapse show  
-                        @else collapse 
-                        @endif" 
+                        @if(Request::url() == route('donhang') || Request::url() == route('donhang_chuaduyet') || Request::url() == route('donhang_daduyet') || Request::url() == route('donhang_huy')) collapse show
+                        @else collapse
+                        @endif"
                     aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">{{ trans('home_ad.ql_dh') }}:</h6>
-                    <a class="                        
-                        @if (Request::url() == route('donhang')) collapse-item active  
-                        @else collapse-item 
+                    <a class="
+                        @if (Request::url() == route('donhang')) collapse-item active
+                        @else collapse-item
                         @endif" href="{{route('donhang')}}">Tất Cả Đơn Hàng
                     </a>
-                    <a class="                        
-                        @if (Request::url() == route('donhang_chuaduyet')) collapse-item active  
-                        @else collapse-item 
+                    <a class="
+                        @if (Request::url() == route('donhang_chuaduyet')) collapse-item active
+                        @else collapse-item
                         @endif" href="{{route('donhang_chuaduyet')}}">Đơn Hàng Chưa Duyệt
                     </a>
-                    <a class="                        
-                        @if (Request::url() == route('donhang_daduyet')) collapse-item active  
-                        @else collapse-item 
+                    <a class="
+                        @if (Request::url() == route('donhang_daduyet')) collapse-item active
+                        @else collapse-item
                         @endif" href="{{route('donhang_daduyet')}}">Đơn Hàng Đã Duyệt
                     </a>
-                    <a class="                        
-                        @if (Request::url() == route('donhang_huy')) collapse-item active  
-                        @else collapse-item 
+                    <a class="
+                        @if (Request::url() == route('donhang_huy')) collapse-item active
+                        @else collapse-item
                         @endif" href="{{route('donhang_huy')}}">Hủy Đơn Hàng
                     </a>
                 </div>
@@ -191,21 +191,6 @@
                     <span>{{ trans('home_ad.ql_slide') }}</span>
                 </a>
             </li>
-
-            <li class="@if (Request::url() == route('quanlynn')) nav-item active  @else nav-item @endif">
-                <a class="nav-link"  href="{{route('quanlynn')}}">
-                    <i class="fas fa-language"></i>
-                    <span>{{ trans('home_ad.ql_lang') }}</span>
-                </a>
-            </li>
-
-            <li class="@if (Request::url() == route('quanlycoupon')) nav-item active  @else nav-item @endif">
-                <a class="nav-link"  href="{{route('quanlycoupon')}}">
-                    <i class="fab fa-discourse"></i>
-                    <span>{{ trans('home_ad.ql_coupon') }}</span>
-                </a>
-            </li>
-                      
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -243,7 +228,7 @@
                             </div>
                         </div>
                     </form>
-                    
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -397,14 +382,14 @@
                                             <i class="fas fa-ban text-white"></i>
                                         </div>
                                     </div>
-                                    
+
                                     <div>
                                         <div class="small text-gray-500">{{$now}}</div>
                                         Hủy {{$dh_count_huy}} đơn hàng!
                                     </div>
                                 </a>
                                 @endif
-                                
+
 <!--                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
                                         <div class="icon-circle bg-warning">
@@ -427,7 +412,7 @@
                             </a>
                             <!-- Dropdown - Language -->
                             <div class="dropdown-menu dropdown-menu-right p-0">
-                    
+
                                 <a class="dropdown-item d-flex align-items-center" href="{{URL::asset('')}}language/vi">
                                     <div class="dropdown-list-image mr-3">
                                         <img  src="https://cdn.countryflags.com/thumbs/vietnam/flag-400.png" width="16px" alt="">
@@ -691,7 +676,7 @@
                     }
                 });
             }
-           
+
 
         });
     </script>
@@ -703,7 +688,7 @@
             $("input[name='update_product_id']").each(function(){
                 update_product_id.push($(this).val());
             });
-            for(i=0; i<update_product_id.length; i++){ 
+            for(i=0; i<update_product_id.length; i++){
                 CKEDITOR.replace('e_descriptionvi_' + update_product_id[i]);
                 CKEDITOR.replace('e_descriptionen_' + update_product_id[i]);
             }
@@ -716,7 +701,7 @@
             $("input[name='update_product_id']").each(function(){
                 update_product_id.push($(this).val());
             });
-            for(i=0; i<update_product_id.length; i++){ 
+            for(i=0; i<update_product_id.length; i++){
                 $( "#date_sale_product_" + update_product_id[i]).datepicker({
                     dateFormat: "yy/mm/dd"
                 });
@@ -725,9 +710,9 @@
     </script>
     @endif
     <!-- Datepicker|| Slug -->
-    
 
-    
+
+
     <script>
 
       $( function() {
@@ -742,7 +727,7 @@
         $("input[name='coupon_product_id']").each(function(){
             coupon_product_id.push($(this).val());
         });
-        for(i=0; i<coupon_product_id.length; i++){ 
+        for(i=0; i<coupon_product_id.length; i++){
             // alert(coupon_product_id[i]);
             $( "#coupon_date_start_" + coupon_product_id[i]).datepicker({
                 dateFormat: "dd-mm-yy"
@@ -754,13 +739,13 @@
         $( "#date_sale_product" ).datepicker({
             dateFormat: "yy/mm/dd"
         });
-        
+
         @if($url_canonical == route('quanlynn'))
         post_name_id_post = [];
         $("input[name='post_name_id_post']").each(function(){
             post_name_id_post.push($(this).val());
         });
-        for(i=0; i<post_name_id_post.length; i++){ 
+        for(i=0; i<post_name_id_post.length; i++){
         // alert("#sp_vi_" + post_name_id_post[i]);
         CKEDITOR.replace('desvi_' + post_name_id_post[i]);
         CKEDITOR.replace('desen_' + post_name_id_post[i]);
@@ -768,13 +753,13 @@
         $( "#sp_vi_" + post_name_id_post[i] ).keyup(function(event)
         {
             var title, slug;
-         
-            //Lấy text từ thẻ input title 
+
+            //Lấy text từ thẻ input title
             title = $(this).val();
-         
+
             //Đổi chữ hoa thành chữ thường
             slug = title.toLowerCase();
-         
+
             //Đổi ký tự có dấu thành không dấu
             slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
             slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
@@ -798,7 +783,7 @@
             slug = slug.replace(/\@\-|\-\@|\@/gi, '');
             //In slug ra textbox có id “slug”
             // document.getElementById('slug').value = slug;
-            for(i=0; i<post_name_id_post.length; i++){ 
+            for(i=0; i<post_name_id_post.length; i++){
                 $("#slug_" + post_name_id_post[i]).val(slug);
             }
         });
@@ -827,7 +812,7 @@
                 '#f6c23e',
                 '#858796',
                 '#5a5c69'
-                
+
               ],
 
               data: [
@@ -842,7 +827,7 @@
 
 
             var chart = new Morris.Bar({
-              
+
                 element: 'chart',
                 parseTime: false,
                 hideHover:'auto',
@@ -901,21 +886,21 @@
 
 
         });
-        
-        
+
+
     </script>
     @endif
     <script type="text/javascript">
         @if(session('thongbao'))
-        
+
             toastr.success('{{ session('thongbao') }}', '{{trans('home.Notification')}}',{timeOut: 7000});
 
-        @endif 
-        @if($errors->any()) 
+        @endif
+        @if($errors->any())
           @foreach($errors->all() as $err)
-            
+
             toastr.error('{{$err}}', '{{trans('home.Notification')}}',{timeOut: 7000});
-            
+
           @endforeach
         @endif
     </script>

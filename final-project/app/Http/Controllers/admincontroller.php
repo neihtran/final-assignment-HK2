@@ -57,11 +57,11 @@ class admincontroller extends Controller
             $url_canonical = $req->url();
             // $user_ip_address = '192.168.1.42';
 
-            $dauthangnay = Carbon::now('Asia/Nghe_An')->startOfMonth()->toDateString();
-            $dau_thangtruoc = Carbon::now('Asia/Nghe_An')->subMonth()->startOfMonth()->toDateString();
-            $cuoi_thangtruoc = Carbon::now('Asia/Nghe_An')->subMonth()->endOfMonth()->toDateString();
-            $sub365ngay = Carbon::now('Asia/Nghe_An')->subdays(365)->toDateString();
-            $now = Carbon::now('Asia/Nghe_An')->toDateString();
+            $dauthangnay = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString();
+            $dau_thangtruoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
+            $cuoi_thangtruoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
+            $sub365ngay = Carbon::now('Asia/Ho_Chi_Minh')->subdays(365)->toDateString();
+            $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
 
             //tong thang truoc
             $tong_thangtruoc = Visitors::whereBetween('date_visitor', [$dau_thangtruoc,$cuoi_thangtruoc])->get();
@@ -899,7 +899,7 @@ class admincontroller extends Controller
                 $product_soid = $product->product_soid;
 
                 $product_price = $product->unit_price;
-                $now = Carbon::now('Asia/Nghe_An')->toDateString();
+                $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
 
                 foreach ($data['quantity'] as $key2 => $qty) {
                     if ($key==$key2) {
@@ -1205,15 +1205,15 @@ class admincontroller extends Controller
 
     public function dashboard_filter(Request $req){
         $data = $req->all();
-        // echo $today = Carbon::now('Asia/Nghe_An');
-        $dauthangnay = Carbon::now('Asia/Nghe_An')->startOfMonth()->toDateString();
-        $dau_thangtruoc = Carbon::now('Asia/Nghe_An')->subMonth()->startOfMonth()->toDateString();
-        $cuoi_thangtruoc = Carbon::now('Asia/Nghe_An')->subMonth()->endOfMonth()->toDateString();
+        // echo $today = Carbon::now('Asia/Ho_Chi_Minh');
+        $dauthangnay = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString();
+        $dau_thangtruoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
+        $cuoi_thangtruoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
 
-        $sub7ngay = Carbon::now('Asia/Nghe_An')->subdays(7)->toDateString();
-        $sub365ngay = Carbon::now('Asia/Nghe_An')->subdays(365)->toDateString();
+        $sub7ngay = Carbon::now('Asia/Ho_Chi_Minh')->subdays(7)->toDateString();
+        $sub365ngay = Carbon::now('Asia/Ho_Chi_Minh')->subdays(365)->toDateString();
 
-        $now = Carbon::now('Asia/Nghe_An')->toDateString();
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
 
         if ($data['dashboard_value']=='7ngay') {
             $get = Statistical::whereBetween('order_date', [$sub7ngay,$now])->orderBy('order_date','ASC')->get();
@@ -1244,8 +1244,8 @@ class admincontroller extends Controller
     }
 
     public function days_order(){
-        $sub30ngay = Carbon::now('Asia/Nghe_An')->subdays(40)->toDateString();
-        $now = Carbon::now('Asia/Nghe_An')->toDateString();
+        $sub30ngay = Carbon::now('Asia/Ho_Chi_Minh')->subdays(40)->toDateString();
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
         $get = Statistical::whereBetween('order_date', [$sub30ngay,$now])->orderBy('order_date','ASC')->get();
 
         foreach ($get as $key => $val) {
@@ -1265,15 +1265,15 @@ class admincontroller extends Controller
 
         if (Auth::check()) {
 
-            $month_now = Carbon::now('Asia/Nghe_An')->month;
-            $day_now = Carbon::now('Asia/Nghe_An')->day;
-            $year_now = Carbon::now('Asia/Nghe_An')->year;
+            $month_now = Carbon::now('Asia/Ho_Chi_Minh')->month;
+            $day_now = Carbon::now('Asia/Ho_Chi_Minh')->day;
+            $year_now = Carbon::now('Asia/Ho_Chi_Minh')->year;
 
 
             $coupon = Coupon::orderBy('coupon_id', 'desc')->get();
             $coupons=Coupon::all();
             //dd($coupon);
-            $today =  Carbon::now('Asia/Nghe_An')->format('d-m-Y');
+            $today =  Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y');
             $coupon_send_new = Coupon::where('coupon_status', 0)->where('coupon_date_end', '>=', $today)->first();
             $url_canonical = $req->url();
             $sendcou = Coupon::where('coupon_status',0)->get();
@@ -1382,7 +1382,7 @@ class admincontroller extends Controller
 
     public function send_coupon(){
         $user_coupon = User::where('level', 2)->get();
-        $today =  Carbon::now('Asia/Nghe_An')->format('d-m-Y');
+        $today =  Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y');
         $coupon_send_new = Coupon::where('coupon_code', request()->code_cou)->first();
         $now_send = date('d-m-Y H:i:s');
         $to_email =  "npn020899@gmail.com";
