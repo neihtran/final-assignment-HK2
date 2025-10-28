@@ -1,6 +1,6 @@
  @extends('admin/Admin')
 
-@section('title-ad')   
+@section('title-ad')
     {{ trans('home_ad.ql_dh') }}
 @endsection
 
@@ -11,11 +11,7 @@
         </div>
         <div style="margin-top: 25px; margin-bottom: 1px; margin-left: 9px">
             <table>
-                <tr>
-                    <button style="margin-left: 10px" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ExcelOrder">
-                        <i class="fas fa-file-export" aria-hidden="true"></i> {{ trans('home_ad.choose') }} {{ trans('home_ad.export') }} Excel
-                    </button>
-                </tr>
+                <!-- Import/Export Excel button removed -->
             </table>
         </div>
         <div class="card-body">
@@ -42,13 +38,13 @@
                         <tr>
                             <th>STT </th>
                             <th>{{ trans('Ql_sp.tenkh') }}</th>
-                            
+
                             <th>Email</th>
                             <th>{{ trans('Ql_sp.pay') }}</th>
                             <!-- <th style="width: 15em;word-wrap:break-word;">Address</th> -->
                             <!-- <th>Phone Number</th> -->
                             <th>{{ trans('home_ad.codeorder') }}</th>
-                            
+
                             <th>{{ trans('Ql_sp.trangthai') }}</th>
                            <!--  <th>Created At </th>
                             <th>Total Money</th>
@@ -74,11 +70,11 @@
                                     <span class="xanhla tag-style"> Đang vận chuyển</span>
                                     <?php
                                      }elseif($dh->status_bill==0){
-                                    ?>  
+                                    ?>
                                      <span class="still-term tag-style">Đang xử lý...</span>
                                     <?php
                                     }else{
-                                    ?> 
+                                    ?>
                                     <a ><span class="expired tag-style">Hủy đơn</span></a>
                                     <?php
                                    }
@@ -88,7 +84,7 @@
                             <td>{{number_format($dh->total)}}</td>
                             <td>{{$dh->payment}}</td>
                             <td>{{$dh->note}}</td> -->
-                            
+
 
                             <td>
                                  <a href="{{route('donhangchitiet', $dh->id_bill)}}">
@@ -112,14 +108,14 @@
                                         <div class="modal-body">Chọn "Delete" bên dưới nếu bạn đã chắc chắn muốn xóa.</div>
                                         <div class="modal-footer">
                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Huỷ bỏ </button>
-                                            
+
                                              <form method="" action="{{route('deletedh', $dh->id_bill)}}">
                                                 <button type="submit" class="btn btn-danger">
                                                     Delete
                                                 </button>
-                                            </form>                          
-                                           
-                                            
+                                            </form>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -134,75 +130,6 @@
         </div>
     </div>
 
-    <!-- Import Export Excel -->
-    <div class="modal" id="ExcelOrder">
-        <div class="modal-dialog">
-          <div class="modal-content">
-          
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">{{ trans('home_ad.export') }} Excel</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <style type="text/css">
-                .tabledh{
-                    margin-right: 22px;
-                    margin-bottom: 22px;
-                }
-                .tableright{
-                    margin-bottom: 22px;
-                }
-            </style>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div style="margin-top: 15px; margin-bottom: 10px; margin-left: 2px">
-                    <table class="tabledh">
-                        <tr>
-                            <form action="{{url('/export-excel-don-hang-da-duyet')}}" method="POST">
-                                @csrf
-                                <!-- <input type="submit" value="{{ trans('home_ad.export') }} Excel" name="export_dh_da_duyet" class="btn btn-outline-success"> -->
-                                <button class="btn btn-outline-success tabledh" type="submit" name="export_dh_da_duyet">
-                                    <i class="fas fa-file-export" aria-hidden="true"></i> {{ trans('home_ad.export_dd') }}
-                                </button>
-                            </form>
-                        </tr>
-                        <tr>
-                            <form action="{{url('/export-excel-don-hang')}}" method="POST">
-                                @csrf
-                                <button class="btn btn-outline-primary tableright" type="submit" name="export_dh">
-                                    <i class="fas fa-file-export" aria-hidden="true"></i> {{ trans('home_ad.export_dh') }}
-                                </button>
-                            </form>
-                        </tr>
-                        <tr>
-                            <form action="{{url('/export-excel-don-hang-chua-duyet')}}" method="POST">
-                                @csrf
-                                <button class="btn btn-outline-info tabledh" type="submit" name="export_dh_chua_duyet">
-                                    <i class="fas fa-file-export" aria-hidden="true"></i> {{ trans('home_ad.export_cd') }}
-                                </button>
-                            </form>
-                        </tr>
-
-                        <tr>
-                            <form action="{{url('/export-excel-don-hang-huy')}}" method="POST">
-                                @csrf
-                                <!-- <input type="submit" value="{{ trans('home_ad.export') }} Excel" name="export_dh_da_duyet" class="btn btn-outline-success"> -->
-                                <button class="btn btn-outline-danger tableright" type="submit" name="export_dh_huy">
-                                    <i class="fas fa-file-export" aria-hidden="true"></i> {{ trans('home_ad.export_h') }}
-                                </button>
-                            </form>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-            
-          </div>
-        </div>
-    </div>
+    <!-- Import/Export Excel modal removed -->
 
 @endsection

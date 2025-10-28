@@ -47,11 +47,7 @@
                 <tr>
                     <a href="{{url('/send-coupon')}}" class="btn btn-outline-info"><i class="fas fa-mail-bulk"></i> {{ trans('Ql_sp.guimagiamgia') }}</a>
                 </tr>
-                <tr>
-                    <button style="margin-left: 10px" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ExcelCoupon"><i class="fas fa-file-excel"></i>
-                        {{ trans('home_ad.import') }} / {{ trans('home_ad.export') }} Excel
-                    </button>
-                </tr>
+                <!-- Import/Export Excel button removed -->
             </table>
         </div>
         <div class="card-body">
@@ -234,56 +230,7 @@
     </div>
 
 
-    <!-- Import Export Excel -->
-    <div class="modal" id="ExcelCoupon">
-        <div class="modal-dialog">
-          <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">{{ trans('home_ad.import') }} / {{ trans('home_ad.export') }} Excel</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div style="margin-top: 15px; margin-bottom: 10px; margin-left: 2px">
-                    <table>
-                        <tr>
-                            <form action="{{url('/import-excel-coupon')}}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <!-- <input type="file" name="file" id="file" accept=".xlsx" required><br><br> -->
-                                <!-- <input type="submit" value="{{ trans('home_ad.import') }} Excel" name="import_coupon" class="btn btn-primary" style="margin-right: 10px;"> -->
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="file" id="file" accept=".xlsx" required>
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
-                                </div><br><br>
-                                <button class="btn btn-outline-primary" type="submit" name="import_coupon" style="margin-right: 10px;">
-                                    <i class="fas fa-file-import" aria-hidden="true"></i> {{ trans('home_ad.import') }} Excel
-                                </button>
-                            </form>
-                        </tr>
-                        <tr>
-                            <form action="{{url('/export-excel-coupon')}}" method="POST">
-                                @csrf
-                                <!-- <input type="submit" value="{{ trans('home_ad.export') }} Excel" name="export_coupon" class="btn btn-success"> -->
-                                <button class="btn btn-outline-success" type="submit" name="export_coupon">
-                                    <i class="fas fa-file-export" aria-hidden="true"></i> {{ trans('home_ad.export') }} Excel
-                                </button>
-                            </form>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-
-          </div>
-        </div>
-    </div>
+    <!-- Import/Export Excel modal removed -->
 
     <!-- Modal Add-->
     <div class="modal fade" id="couponAdd" tabindex="-1" role="dialog" style="z-index: 1050; display: none;" aria-hidden="true">

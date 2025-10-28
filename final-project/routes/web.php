@@ -81,9 +81,9 @@ Route::get('update-new-pass',['as'=>'updatenewpass','uses'=>'passController@getu
 Route::post('update-new-pass',['as'=>'updatenewpass','uses'=>'passController@postupdate_new_pass']);
 
 
-// Route::get('vnpay',['as'=>'vnpay','uses'=>'pgcontroller@getVnpay']);
+// QR-only online payment: form posts to 'vnpay-online' which now shows a QR page.
 Route::post('vnpay-online',['as'=>'vnpayonline','uses'=>'pgcontroller@postVnpay_online']);
-Route::get('vnpay-return',['as'=>'vnpayreturn','uses'=>'pgcontroller@getVnpay_return']);
+Route::get('qr/confirm/{code}',['as'=>'qr.confirm','uses'=>'pgcontroller@qrConfirm']);
 
 
 /*---------------------------------------------------ADMIN---------------------------------------------------------------*/

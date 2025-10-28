@@ -63,7 +63,7 @@
                         @else
                         {{number_format($product_km->promotion_price,0,',','.')}} VNĐ
                         @endif" >
-                        
+
                         <input type="hidden" id="instock{{$product_km->id}}" value="
                          @if($product_km->product_quantity>0)
                          {{ trans('home.INSTOCK') }}
@@ -79,7 +79,7 @@
                                 <img id="wishList_image{{$product_km->id}}" class="primary-img" src="source/image/product/{{$product_km->image}}" alt="single-product" height="226px" width="226px">
                                 <img class="secondary-img" src="source/image/product/{{$product_km->image}}" alt="single-product" height="226px" width="226px">
                             </a>
-                            
+
                             <div class="countdown" data-countdown="{{ $product_km->date_sale}} {{ $product_km->hours_sale}}"></div>
                             <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal_{{$product_km->id}}" title="Quick View"><i class="lnr lnr-magnifier"></i></a>
                         </div>
@@ -94,12 +94,12 @@
                             <div class="pro-actions">
                                 <div class="actions-primary">
                                      @if($product_km->product_quantity>0)
-                                    <!-- <a id="addcart{{$product_km->id}}" 
-                                    @if(Auth::check()) href="{{route('themgiohang',$product_km->id)}}" 
-                                    @else href="{{route('dangnhap')}}" 
+                                    <!-- <a id="addcart{{$product_km->id}}"
+                                    @if(Auth::check()) href="{{route('themgiohang',$product_km->id)}}"
+                                    @else href="{{route('dangnhap')}}"
                                     @endif title="{{ trans('home.addcart') }}"> + {{ trans('home.addcart') }}</a> -->
-                                    <a id="addcart{{$product_km->id}}" 
-                                        <?php 
+                                    <a id="addcart{{$product_km->id}}"
+                                        <?php
                                         if(Auth::check() || Session::get('user_name_login')){
                                             $addnewcart = route('themgiohang',$product_km->id);
                                         }else{
@@ -108,7 +108,7 @@
 
 
                                          ?>
-                                    href="{{$addnewcart }}" 
+                                    href="{{$addnewcart }}"
                                     title="{{ trans('home.addcart') }}"> + {{ trans('home.addcart') }}</a>
 
                                     @else
@@ -137,7 +137,7 @@
         </div>
         <!-- Hot Deal Products End Here -->
         <!-- Hot Deal Products End Here -->
-    
+
 
 
         <!-- Big Banner Start Here -->
@@ -197,13 +197,13 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#topLaptop-1">{{trans('home.top')}}</a>
                             </li>
-                        </ul>                       
+                        </ul>
 
-                    </div> 
+                    </div>
 
                     <!-- Tab Contetn Start -->
                     <div class="tab-content">
-                        
+
                         <div id="laptop" class="tab-pane fade show active">
                             <!-- Arrivals Product Activation Start Here -->
                             <div class="electronics-pro-active owl-carousel">
@@ -258,17 +258,17 @@
                                             <div class="pro-actions">
                                                 <div class="actions-primary">
                                                     @if($new->product_quantity>0)
-                                                    <a id="addcart{{$new->id}}" 
-                                                        <?php 
+                                                    <a id="addcart{{$new->id}}"
+                                                        <?php
                                                             if(Auth::check() || Session::get('user_name_login')){
                                                                 $addnewcart = route('themgiohang',$new->id);
                                                             }else{
                                                                 $addnewcart = route('dangnhap');
                                                             }
                                                          ?>
-                         
-                                                        href="{{$addnewcart}}" 
-                                                        
+
+                                                        href="{{$addnewcart}}"
+
                                                         title="{{ trans('home.addcart') }}"> + {{ trans('home.addcart') }}</a>
                                                     @else
                                                     <a id="addcart{{$new->id}}" class="disabled-link"> + {{ trans('home.addcart') }}</a>
@@ -345,8 +345,8 @@
                                             <div class="pro-actions">
                                                 <div class="actions-primary">
                                                     @if($top->product_quantity>0)
-                                                    <a id="addcart{{$top->id}}" 
-                                                        <?php 
+                                                    <a id="addcart{{$top->id}}"
+                                                        <?php
                                                             if(Auth::check() || Session::get('user_name_login')){
                                                                 $addnewcart = route('themgiohang',$top->id);
                                                             }else{
@@ -398,9 +398,9 @@
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#topLaptop">{{trans('home.top')}} </a>
                             </li>
-                        </ul>                       
+                        </ul>
 
-                    </div> 
+                    </div>
 
                     <!-- Tab Contetn Start -->
                     <div class="tab-content">
@@ -449,16 +449,16 @@
                                         <div class="pro-actions">
                                             <div class="actions-primary">
                                                 @if($top_pr->product_quantity>0)
-                                                <a id="addcart{{$top_pr->id}}" 
-                                                    <?php 
+                                                <a id="addcart{{$top_pr->id}}"
+                                                    <?php
                                                         if(Auth::check() || Session::get('user_name_login')){
                                                             $addnewcart = route('themgiohang',$top_pr->id);
                                                         }else{
                                                             $addnewcart = route('dangnhap');
                                                         }
                                                     ?>
-                                                    href="{{$addnewcart}}" 
-                                                   
+                                                    href="{{$addnewcart}}"
+
                                                     title="{{ trans('home.addcart') }}"> + {{ trans('home.addcart') }}</a>
                                                 @else
                                                 <a id="addcart{{$top_pr->id}}" class="disabled-link"> + {{ trans('home.addcart') }}</a>
@@ -489,8 +489,8 @@
         <!-- Like Products Area Start Here -->
         <style type="text/css">
             #scrolllike {
-                margin-left: 15%; 
-                height: 330px; 
+                margin-left: 15%;
+                height: 330px;
                 overflow: scroll;
             }
             #scrolllike::-webkit-scrollbar-track {
@@ -509,7 +509,7 @@
             }
         </style>
         <div id="maylike">
-            
+
         </div>
         <!-- Lile Products Area End Here -->
         <!-- Brand Banner Area Start Here -->
@@ -559,7 +559,7 @@
                                 <a style="width: 194.33px; height: 108.33px" href="#"><img width="173.33px" height="82.53px" src="{{asset('source/assets/frontend/img/brand/4.jpg')}}" alt="brand-image"></a>
                             </div>
                         </div>
-                        <!-- Brand Banner End -->                        
+                        <!-- Brand Banner End -->
 
                     </div>
                     <div class="col-lg-3">

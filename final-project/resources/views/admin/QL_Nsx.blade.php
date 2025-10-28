@@ -43,11 +43,7 @@
                         <i class="fa fa-plus" aria-hidden="true"></i> {{ trans('home_ad.add') }}
                     </button>
                 </tr>
-                <tr>
-                    <button style="margin-left: 10px" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ExcelType"><i class="fas fa-file-excel"></i>
-                        {{ trans('home_ad.import') }} / {{ trans('home_ad.export') }} Excel
-                    </button>
-                </tr>
+                <!-- Import/Export Excel button removed -->
             </table>
         </div>
         <div class="card-body">
@@ -98,10 +94,10 @@
                                         <div class="modal-body">Chọn "Delete" bên dưới nếu bạn đã chắc chắn muốn xóa.</div>
                                         <div class="modal-footer">
                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Huỷ bỏ</button>
-                          
+
                                             <form method="" action="{{route('deletensx', $nsxx->id )}}">
-                                                
-                                                
+
+
                                                 <button type="submit" class="btn btn-danger">
                                                     Delete
                                                 </button>
@@ -145,7 +141,7 @@
                                         </form>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
 
                         </tr>
                     @endforeach
@@ -158,56 +154,7 @@
 
     </div>
 
-    <!-- Import Export Excel -->
-    <div class="modal" id="ExcelType">
-        <div class="modal-dialog">
-          <div class="modal-content">
-          
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">{{ trans('home_ad.import') }} / {{ trans('home_ad.export') }} Excel</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div style="margin-top: 15px; margin-bottom: 10px; margin-left: 2px">
-                    <table>
-                        <tr>
-                            <form action="{{url('/import-excel-nsx')}}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <!-- <input type="file" name="file" id="file" accept=".xlsx" required><br><br> -->
-                                <!-- <input type="submit" value="{{ trans('home_ad.import') }} Excel" name="import_nsx" class="btn btn-primary" style="margin-right: 10px;"> -->
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="file" id="file" accept=".xlsx" required>
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
-                                </div><br><br>
-                                <button class="btn btn-outline-primary" type="submit" name="import_nsx" style="margin-right: 10px;">
-                                    <i class="fas fa-file-import" aria-hidden="true"></i> {{ trans('home_ad.import') }} Excel
-                                </button>
-                            </form>
-                        </tr>
-                        <tr>
-                            <form action="{{url('/export-excel-nsx')}}" method="POST">
-                                @csrf
-                                <!-- <input type="submit" value="{{ trans('home_ad.export') }} Excel" name="export_nsx" class="btn btn-success"> -->
-                                <button class="btn btn-outline-success" type="submit" name="export_nsx">
-                                    <i class="fas fa-file-export" aria-hidden="true"></i> {{ trans('home_ad.export') }} Excel
-                                </button>
-                            </form>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-            
-          </div>
-        </div>
-    </div>
+    <!-- Import/Export Excel modal removed -->
 
 
     <!-- Modal Add-->
@@ -242,7 +189,7 @@
                 </form>
             </div>
         </div>
-    </div> 
+    </div>
 
 
 <style type="text/css">

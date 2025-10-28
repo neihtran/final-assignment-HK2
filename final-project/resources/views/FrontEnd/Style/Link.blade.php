@@ -13,6 +13,10 @@
 <!-- Google Fonts: có Vietnamese -->
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap&subset=vietnamese" rel="stylesheet">
 
+<!-- Preload local fonts (place .woff2 files at public/source/assets/frontend/fonts/) -->
+<link rel="preload" href="{{ asset('source/assets/frontend/fonts/NotoSans-Regular.woff2') }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ asset('source/assets/frontend/fonts/NotoSans-Bold.woff2') }}" as="font" type="font/woff2" crossorigin>
+
 <!-- CSS của theme (MỖI LINK CHỈ 1 LẦN) -->
 <link rel="stylesheet" href="{{ asset('source/assets/frontend/css/font-awesome.min.css') }}">
 <link rel="stylesheet" href="{{ asset('source/assets/frontend/css/ionicons.min.css') }}">

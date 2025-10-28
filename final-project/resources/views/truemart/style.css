@@ -45,17 +45,18 @@ Version: 1.0;
     27. About Us CSS
     28. Contact Us CSS
     29. Popup Window CSS
-    
+
 -----------------------------------------------------*/
 
-/* googel font poppins */
-@import url('https://fonts.googleapis.com/css?family=Lato:400,700,900|Open+Sans');
+/* Load fonts with Vietnamese subset for correct diacritics */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700;900&family=Lato:wght@400;700;900&family=Open+Sans:wght@400;700;900&display=swap&subset=vietnamese');
 
 /*----------------------------------------*/
 /* 1. Theme Default CSS
 /*----------------------------------------*/
 body {
-    font-family: 'Open Sans', sans-serif;
+    /* Prefer a Vietnamese-capable webfont, fall back to common system fonts */
+    font-family: 'Noto Sans', 'Open Sans', 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     font-weight: 400;
     color: #232323;
     font-size: 16px;
@@ -546,7 +547,7 @@ ul {
 
 .cart-price {
     margin: 5px 0;
-} 
+}
 
 .cart-actions a {
     background: #2c2c2c none repeat scroll 0 0;
@@ -980,7 +981,7 @@ li.megamenu-img a {
 }
 
 .nivo-directionNav a:hover i {
-    color:#e62e04; 
+    color:#e62e04;
 }
 
 .nivo-directionNav a.nivo-prevNav {
@@ -1448,7 +1449,7 @@ li.megamenu-img a {
 }
 .col-img:hover img {
   transform: scale(1.1);
- 
+
 }
 
 /*----------------------------------------*/
@@ -1456,12 +1457,13 @@ li.megamenu-img a {
 /*----------------------------------------*/
 
 .section-ttitle h2,.title-box h2 {
-  color: #212121;
-  font-size: 34px;
-  font-weight: 900;
-  line-height: 1;
-  margin: 0;
-  text-transform: capitalize;
+    color: #212121;
+    font-size: 34px;
+    /* Use 700 (available in Google Fonts) instead of 900 to avoid fallback to a different family */
+    font-weight: 700;
+    line-height: 1;
+    margin: 0;
+    text-transform: capitalize;
 }
 .tab-menu {
   -webkit-box-align: center;
@@ -1503,10 +1505,18 @@ li.megamenu-img a {
 /*----------------------------------------*/
 
 .section-ttitle2 {
-  color: #212121;
-  font-size: 24px;
-  font-weight: 900;
-  text-align: center;
+    color: #212121;
+    font-size: 24px;
+    /* match available weights from Google Fonts */
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Ensure headings use the chosen webfont and render Vietnamese glyphs correctly */
+.section-ttitle2,
+.section-ttitle h2,
+.title-box h2 {
+    font-family: 'Noto Sans', 'Open Sans', 'Lato', Arial, sans-serif;
 }
 
 .owl-dots{
@@ -2794,7 +2804,7 @@ li.megamenu-img a {
   background: rgba(0, 0, 0, 0) url("img/vertical-menu/icon-expand.png") no-repeat scroll 20px 9px;
 }
 .category-menu.v-cat-menu .has-sub.open > a{
-    background: rgba(0, 0, 0, 0) url("img/vertical-menu/icon-collapse.png") no-repeat scroll 20px 9px;  
+    background: rgba(0, 0, 0, 0) url("img/vertical-menu/icon-collapse.png") no-repeat scroll 20px 9px;
 }
 /*img/vertical-menu/icon-expand.png*/
 .category-menu.v-cat-menu ul li.has-sub > a::after {
@@ -3439,7 +3449,7 @@ ul.tag-list > li > a {
 .product-description i {
   color: #666;
   font-size: 16px;
-} 
+}
 
 .product-description .compare-cart,.cart-main-area.wish-list .product-add-to-cart a {
   font-size: 13px;

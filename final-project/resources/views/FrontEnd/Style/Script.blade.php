@@ -1,4 +1,4 @@
- 
+
     <!-- jquery 3.2.1 -->
     <script src="{{asset('source/assets/frontend/js/vendor/jquery-3.2.1.min.js')}}"></script>
     <!-- Countdown js -->
@@ -34,18 +34,18 @@
     <script src="{{ asset('source/assets/dest/js/toastr.min.js') }}"></script>
     <script type="text/javascript">
     @if(session('thongbao'))
-    
+
         toastr.success('{{ session('thongbao') }}', '{{trans('home.Notification')}}',{timeOut: 7000});
 
-    @endif 
+    @endif
     @if(session('thongbaoloi'))
-    
+
         toastr.error('{{ session('thongbaoloi') }}', '{{trans('home.Notification')}}',{timeOut: 7000});
 
     @endif
-    @if($errors->any()) 
+    @if($errors->any())
       @foreach($errors->all() as $err)
-        
+
         toastr.error('{{$err}}', '{{trans('home.Notification')}}',{timeOut: 7000});
       @endforeach
     @endif
@@ -68,9 +68,6 @@
       }
     </script>
 
-    <!-- plugin facebook -->
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0" nonce="3Gf0BF4H"></script>
     <script type="text/javascript">
         jQuery(document).ready(function($) {
              $('.share').click(function() {
@@ -82,24 +79,6 @@
              return false;
              });
         });
-    </script>
-    <!-- Load Facebook SDK for JavaScript -->
-    <div id="fb-root"></div>
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          xfbml            : true,
-          version          : 'v10.0'
-        });
-      };
-
-      (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
     </script>
 
   <script type="text/javascript">
@@ -159,7 +138,7 @@
              }
       });
             // location.reload();
-            
+
       });
   </script>
 
@@ -188,7 +167,7 @@
         }else{
           document.getElementById("del-tr"+id).remove();
         }
-        
+
       }
     }
 
@@ -208,7 +187,7 @@
           var page = compare[i].page;
           var mota = compare[i].mota;
 
-          $('#td1').append(`                            
+          $('#td1').append(`
             <td class="product-description" id="del-td`+id+`">
                 <div class="compare-details">
                     <div class="compare-detail-img">
@@ -221,26 +200,26 @@
                 </div>
             </td>`
           );
-          $('#td2').append(`                            
+          $('#td2').append(`
             <td class="product-description" id="del-td1`+id+`" style="vertical-align: top;">
                 <p>`+mota+`</p>
             </td>`
           );
-          $('#td3').append(`                            
+          $('#td3').append(`
             <td class="product-description" id="del-td2`+id+`">`+price+`</td>`
           );
-          $('#td4').append(`                            
+          $('#td4').append(`
             <td class="product-description" id="del-td3`+id+`">`+insock+`</td>`
           );
-          $('#td5').append(`                            
+          $('#td5').append(`
             <td class="product-description" id="del-td4`+id+`">
                 <a class="compare-cart text-uppercase" href="`+url+`"> + {{ trans('home.addcart') }}</a>
             </td>`
           );
-          $('#td6').append(`                            
+          $('#td6').append(`
             <td class="product-description" id="del-td5`+id+`"><a style="cursor: pointer;" onclick="del_Compare(`+id+`)"><i class="fa fa-trash-o"></i></a></td>`
           );
-          $('#td7').append(`                            
+          $('#td7').append(`
             <td class="product-description" id="del-td6`+id+`">
                 <div class="product-rating">
                     <i class="fa fa-star"></i>
@@ -302,7 +281,7 @@
       }else{
         if (old_data.length<=2) {
           old_data.push(newItemCompare);
-          $('#td1').append(`                            
+          $('#td1').append(`
             <td class="product-description" id="del-td`+id+`">
                 <div class="compare-details">
                     <div class="compare-detail-img">
@@ -315,26 +294,26 @@
                 </div>
             </td>`
           );
-          $('#td2').append(`                            
+          $('#td2').append(`
             <td class="product-description" id="del-td1`+id+`">
                 <p>`+mota+`</p>
             </td>`
           );
-          $('#td3').append(`                            
+          $('#td3').append(`
             <td class="product-description" id="del-td2`+id+`">`+price+`</td>`
           );
-          $('#td4').append(`                            
+          $('#td4').append(`
             <td class="product-description" id="del-td3`+id+`">`+insock+`</td>`
           );
-          $('#td5').append(`                            
+          $('#td5').append(`
             <td class="product-description" id="del-td4`+id+`">
                 <a class="compare-cart text-uppercase" href="`+url+`"> + {{ trans('home.addcart') }}</a>
             </td>`
           );
-          $('#td6').append(`                            
+          $('#td6').append(`
             <td class="product-description" id="del-td5`+id+`"><a style="cursor: pointer;" onclick="del_Compare(`+id+`)"><i class="fa fa-trash-o"></i></a></td>`
           );
-          $('#td7').append(`                            
+          $('#td7').append(`
             <td class="product-description" id="del-td6`+id+`">
                 <div class="product-rating">
                     <i class="fa fa-star"></i>
@@ -381,14 +360,14 @@
         localStorage.setItem('data', JSON.stringify(data));
 
         if (document.getElementById("del-ggg"+id)) {
-          document.getElementById("del-ggg"+id).remove(); 
+          document.getElementById("del-ggg"+id).remove();
         }
         else if (document.getElementById("del_product"+id)) {
-          document.getElementById("del_product"+id).remove(); 
+          document.getElementById("del_product"+id).remove();
           if(data.length==0 && document.getElementById("sidebar_allproduct")){
-            document.getElementById("sidebar_allproduct").remove(); 
+            document.getElementById("sidebar_allproduct").remove();
           }
-        } 
+        }
         else if (document.getElementById("delete_trall1"+id).remove()) {
           document.getElementById("delete_trall1"+id).remove()
           document.getElementById("delete_trall2"+id).remove()
@@ -400,14 +379,14 @@
         }
         if (data.length==0) {
           if (document.getElementById("maylike")) {
-            document.getElementById("maylike").remove(); 
+            document.getElementById("maylike").remove();
           }
           else if(document.getElementById("count_wish")){
             document.getElementById("count_wish").remove();
           }
           else if(document.getElementById("product_wishlist")){
-            document.getElementById("product_wishlist").remove(); 
-          }  
+            document.getElementById("product_wishlist").remove();
+          }
         }
 
       }
@@ -434,7 +413,7 @@
           $('#maylike').append(`
               <div class="like-product ptb-95 off-white-bg pt-sm-50 pb-sm-55 " id="del-background`+id+`">
                   <div class="container" id="wish_top">
-                      <div class="like-product-area" > 
+                      <div class="like-product-area" >
                           <h2 class="section-ttitle2 mb-30">{{ trans('home.like') }} </h2>
                           <!-- Arrivals Product Activation Start Here -->
                           <div id="scrolllike" >
@@ -443,9 +422,9 @@
                               <div  class="double-product" id="single_product_like" style="height: 100%;
                                width: 100%; ">
                                   <!-- Single Product Start -->
-                                  
+
                                   <!-- Single Product End -->
-                              </div>   
+                              </div>
                           </div>
                           <!-- Arrivals Product Activation End Here -->
                       </div>
@@ -482,7 +461,7 @@
             </div>
           `);
         }
-        
+
         for(i = 0; i<data.length;i++){
           var name = data[i].name;
           var price = data[i].price;
@@ -512,7 +491,7 @@
                   </div>
                   <div class="actions-secondary">
                       <a style="cursor: pointer;" onclick="del_wishList(`+id+`)" title="Remove"><i class="fa fa-trash-o"></i></a>
-                      
+
                   </div>
               </div>
             </div>
@@ -520,7 +499,7 @@
         `);
 
         $('#sidbar_product').append('<div class="single-product" id="del_product'+id+'"><div class="pro-img"><a href="'+url+'"><img style="height:150px" class="primary-img" src="'+image+'" alt="single-product"></a></div><div class="pro-content"><div class="pro-info"><h4><a href="'+url+'">'+name+'</a></h4><p><span class="price">'+price+'</span></p></div><div class="pro-actions"><div class="actions-primary"><a href="'+url+'" title="{{ trans('home.addcart') }}"> + {{ trans('home.addcart') }}</a></div><div class="actions-secondary"><a style="cursor: pointer;" onclick="del_wishList('+id+')" title="Remove"><i class="fa fa-trash-o"></i></a></div></div></div></div>');
-          
+
         $('#product_wishlist').append('<tr id="delete_trall'+id+'"><td id="delete_trall1'+id+'" class="product-remove"><a style="cursor: pointer;" onclick="del_wishList('+id+')" title="Remove"><i class="fa fa-times" aria-hidden="true"></i></a></td><td id="delete_trall2'+id+'" class="product-thumbnail"><a href="#"><img src="'+image+'" alt="cart-image" /></a></td><td id="delete_trall3'+id+'" class="product-name"><a href="'+url+'">'+name+'</a></td> <td id="delete_trall4'+id+'" class="product-price"><span class="amount">'+price+'</span></td><td class="product-stock-status"><span>{{ trans('home.INSTOCK') }}</span></td><td id="delete_trall5'+id+'" class="product-add-to-cart"><a href="'+url+'">{{ trans('home.addcart') }}</a></td></tr>');
 
         }
@@ -562,7 +541,7 @@
         $('#maylike').append(`
             <div class="like-product ptb-95 off-white-bg pt-sm-50 pb-sm-55 ">
                 <div class="container">
-                    <div class="like-product-area" > 
+                    <div class="like-product-area" >
                         <h2 class="section-ttitle2 mb-30">{{ trans('home.like') }} </h2>
                         <!-- Arrivals Product Activation Start Here -->
                         <div id="scrolllike">
@@ -571,9 +550,9 @@
                             <div  class="double-product" id="single_product_like" style="height: 100%;
                              width: 100%; ">
                                 <!-- Single Product Start -->
-                                
+
                                 <!-- Single Product End -->
-                            </div>   
+                            </div>
                         </div>
                         <!-- Arrivals Product Activation End Here -->
                     </div>
@@ -603,7 +582,7 @@
                   </div>
                   <div class="actions-secondary">
                       <a style="cursor: pointer;" onclick="del_wishList(`+id+`)" title="Remove"><i class="fa fa-trash-o"></i></a>
-                      
+
                   </div>
               </div>
             </div>
@@ -632,8 +611,8 @@
 
       $('#sort').on('change',function(){
 
-        var url = $(this).val(); 
-        if (url) { 
+        var url = $(this).val();
+        if (url) {
           window.location = url;
         }
         return false;
@@ -642,17 +621,17 @@
       // sap xep hien thi
       $('#showproduct').on('change',function(){
 
-        var url_show = $(this).val(); 
+        var url_show = $(this).val();
         // alert(url_show);
 
-        if (url_show) { 
+        if (url_show) {
             window.location = url_show;
         }
         return false;
       });
 
 
-    }); 
+    });
 
 
 
@@ -671,7 +650,7 @@
 
           steps:10000,
           values: [  <?php echo $min_price_range ?> ,  <?php echo $max_price ?>  ],
-         
+
           slide: function( event, ui ) {
             $( "#amount_start" ).val(ui.values[ 0 ]).simpleMoneyFormat();
             $( "#amount_end" ).val(ui.values[ 1 ]).simpleMoneyFormat();
@@ -687,14 +666,14 @@
         $( "#amount_start" ).val($( "#slider-range" ).slider("values",0)).simpleMoneyFormat();
         $( "#amount_end" ).val($( "#slider-range" ).slider("values",1)).simpleMoneyFormat();
 
-    }); 
+    });
   </script>
-  
+
   <script type="text/javascript">
     $(window).on('load', function() {
         $('#slider').nivoSlider();
     });
-  </script> 
+  </script>
 
   <script type="text/javascript">
     $('#key').keyup(function(){
@@ -709,19 +688,19 @@
               method:"POST",
               data:{query:query, _token:_token},
               success:function(data){
-                $('#search_ajax').fadeIn();  
+                $('#search_ajax').fadeIn();
                 $('#search_ajax').html(data);
               }
              });
 
             }else{
 
-                $('#search_ajax').fadeOut();  
+                $('#search_ajax').fadeOut();
             }
     });
 
-    $(document).on('click', '.li_ajax', function(){  
-        $('#key').val($(this).text());  
-        $('#search_ajax').fadeOut();  
-    }); 
+    $(document).on('click', '.li_ajax', function(){
+        $('#key').val($(this).text());
+        $('#search_ajax').fadeOut();
+    });
   </script>

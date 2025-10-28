@@ -15,11 +15,11 @@ use App\Models\Coupon;
 use App\Models\Rating;
 use App\Models\Payments;
 
-use Session;
+use Illuminate\Support\Facades\Session;
 use Hash;
 use Auth;
 use DB;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App;
 
@@ -38,7 +38,7 @@ class pgcontroller extends Controller
         $nowSale_hours = date('H:m:s');
         $nowSale = date('Y/m/d');
         $all_product = Product::join('post', 'products.id_post', '=', 'post.id_post')->inRandomOrder()->get();
-        
+
         $new_product = Product::join('post', 'products.id_post', '=', 'post.id_post')->where('new',1)->inRandomOrder()->get();
         $top_product = Product::join('post', 'products.id_post', '=', 'post.id_post')->where('new',0)->inRandomOrder()->get();
 
@@ -81,7 +81,7 @@ class pgcontroller extends Controller
 
 
 
-        
+
         if(isset($_GET['sort_by'])){
             $sort_by = $_GET['sort_by'];
 
@@ -104,7 +104,7 @@ class pgcontroller extends Controller
             $max_price = $_GET['end_price'];
 
             $sanpham_theoloai = Product::join('post', 'products.id_post', '=', 'post.id_post')->whereBetween('unit_price',[$min_price,$max_price])->orderBy('unit_price','ASC')->paginate(6);
-            
+
         }else{
             $sanpham_theoloai = Product::join('post', 'products.id_post', '=', 'post.id_post')->where('id_type',$typesanpham)->paginate(6);
         }
@@ -127,7 +127,7 @@ class pgcontroller extends Controller
         else{
             return redirect()->back();
         }
-    	
+
     }
     public function getAllproduct(Request $req){
         $posts = Post::get();
@@ -135,7 +135,7 @@ class pgcontroller extends Controller
 
 
         $sanpham_new = Product::join('post', 'products.id_post', '=', 'post.id_post')->where('new',1)->inRandomOrder()->paginate(3);
-        
+
         if(isset($_GET['sort_by'])){
             $sort_by = $_GET['sort_by'];
 
@@ -158,7 +158,7 @@ class pgcontroller extends Controller
             $max_price = $_GET['end_price'];
 
             $tacca_sanpham = Product::join('post', 'products.id_post', '=', 'post.id_post')->whereBetween('unit_price',[$min_price,$max_price])->orderBy('unit_price','ASC')->paginate(6)->appends(request()->query());
-            
+
         }elseif(isset($_GET['sort_by_show'])){
             $sort_by_show = $_GET['sort_by_show'];
 
@@ -189,7 +189,7 @@ class pgcontroller extends Controller
                 $image_og = url('source/image/product/'.$all->image);
         }
 
-          
+
 
         return view('FrontEnd.AllProduct', compact('tacca_sanpham','meta_desc','image_og','sanpham_new'));
     }
@@ -206,7 +206,7 @@ class pgcontroller extends Controller
         $sanpham_khuyenmai = Product::join('post', 'products.id_post', '=', 'post.id_post')->where('promotion_price','<>',0)->paginate(4);
 
 
-        
+
 
         $sanpham_id = Product::where('id',$req->id)->get();
 
@@ -221,7 +221,8 @@ class pgcontroller extends Controller
         }
         $rating = Rating::where('product_id',$product_id)->avg('rating_number');
         $rating = round($rating);
-    	return view('FrontEnd.DetailProduct',compact('sanpham', 'tuongtu', 'new_product', 'sanpham_khuyenmai', 'meta_desc', 'image_og', 'rating', 'sanpham_id'));
+        $rating_count = Rating::where('product_id',$product_id)->count();
+    	return view('FrontEnd.DetailProduct',compact('sanpham', 'tuongtu', 'new_product', 'sanpham_khuyenmai', 'meta_desc', 'image_og', 'rating', 'rating_count', 'sanpham_id'));
     }
 
     public function getLienHe(Request $req){
@@ -254,7 +255,7 @@ class pgcontroller extends Controller
             ]);
         }
 
- 
+
         //send mail lien he
         $to_email =  "kq909981@gmail.com";
 
@@ -264,7 +265,7 @@ class pgcontroller extends Controller
 
         $name_mail = $req->name;
         $email_mail = $req->email;
-        $content_mail = $req->content;
+        $content_mail = $req->context;
 
 
         Mail::send('email.contact',
@@ -327,23 +328,23 @@ class pgcontroller extends Controller
 
             return view('FrontEnd.CartDetail',compact('image_og'));
         // }
-        return redirect()->route('trang-chu');  
+        // return redirect()->route('trang-chu');
 
     }
 
 
     public function getDatHang(Request $req){
 
-        if(Auth::check() || Session::get('user_name_login')){
+        if(Auth()->check() || Session::get('user_name_login')){
             // $url_canonical = $req->url();
             // dd(Session::get('pay'));
             $image_og = $req->url();
             if (!Session::get('user_name_login')) {
-                $user_dh=  User::find(Auth::user()->id );
+                $user_dh=  User::find(Auth()->user()->id );
             }else{
                 $user_dh=  User::find(Session::get('user_id_login') );
             }
-            
+
 
             return view('FrontEnd.OrderCart',compact( 'image_og', 'user_dh'));
         }
@@ -352,9 +353,9 @@ class pgcontroller extends Controller
         }
 
     }
-    
+
     public function postDatHang(Request $req){
-        
+
     	$cart = Session::get('cart');
         if(Session::get('locale') == 'vi' || Session::get('locale') == null){
             $this->validate($req,[
@@ -407,12 +408,12 @@ class pgcontroller extends Controller
                     $totalPrice = $total_coupon;
                 }
             }
-            $bill->total = $totalPrice;    
+            $bill->total = $totalPrice;
         }else{
             $bill->total = $cart->totalPrice;
         }
     	$bill->payment = $req->payment_method;
-        $bill->status_bill = $req=0;
+    $bill->status_bill = 0;
     	$bill->order_code = $checkout_code;
     	$bill->save();
 
@@ -430,12 +431,12 @@ class pgcontroller extends Controller
             foreach(Session::get('coupon') as $key => $coun){
                 $coupon_qty = Coupon::where('coupon_code',$coun['coupon_code'])->first();
                 if (!Session::get('user_name_login')) {
-                    $coupon_qty->coupon_used = ','.Auth::user()->id;
+                    $coupon_qty->coupon_used = ','.Auth()->user()->id;
                 }else{
                     $coupon_qty->coupon_used = ','.Session::get('user_id_login');
                 }
                 $coupon_qty->coupon_qty--;
-                $coupon_qty->save(); 
+                $coupon_qty->save();
             }
         }
 
@@ -458,7 +459,7 @@ class pgcontroller extends Controller
                                  );
 
 
-        Mail::send('email.mail_oder', 
+        Mail::send('email.mail_oder',
             [
                 'items' => $cart->items,
                 'multisp' => $multisp,
@@ -470,7 +471,7 @@ class pgcontroller extends Controller
         });
         Session::forget('cart');
         Session::forget('coupon');
-        
+
         return redirect()->back()->with('thongbao','Đặt hàng thành công');
 
 
@@ -501,9 +502,9 @@ class pgcontroller extends Controller
 
             ]);
         }
-    	
+
     	$credentials = array('email'=>$req->email, 'password'=>$req->password);
-    	if(Auth::attempt($credentials) && Auth::user()->level == 2 ){
+    	if(Auth()->attempt($credentials) && Auth()->user()->level == 2 ){
 			return redirect()->back();
     	}
     	else
@@ -511,7 +512,7 @@ class pgcontroller extends Controller
     		return redirect()->route('trang-chu-admin');
 
     	}
-    	
+
     }
 
     public function postTimKiem(Request $req){
@@ -543,7 +544,7 @@ class pgcontroller extends Controller
         if($data['query']){
 
             $product = Product::join('post', 'products.id_post', '=', 'post.id_post')
-                                    
+
                                     ->where($multisp,'LIKE','%'.$data['query'].'%')
                                     // ->orWhere('name_type',$req->key)
                                     ->orWhere('unit_price',$data['query'])
@@ -595,9 +596,9 @@ class pgcontroller extends Controller
         if (Session::get('user_name_login')) {
             $used_coupon = Coupon::where('coupon_code', $data['coupon_code'])->where('coupon_status',0)->where('coupon_date_end', '>=', $today)->where('coupon_used', 'LIKE', '%'.Session::get('user_id_login').'%')->first();
         }else{
-            $used_coupon = Coupon::where('coupon_code', $data['coupon_code'])->where('coupon_status',0)->where('coupon_date_end', '>=', $today)->where('coupon_used', 'LIKE', '%'.Auth::user()->id.'%')->first();
+            $used_coupon = Coupon::where('coupon_code', $data['coupon_code'])->where('coupon_status',0)->where('coupon_date_end', '>=', $today)->where('coupon_used', 'LIKE', '%'.Auth()->user()->id.'%')->first();
         }
-        
+
         if ($used_coupon) {
             return redirect()->back()->with('message_err', 'Mã giảm giá đã sử dụng, vui lòng nhập mã khác');
         }else{
@@ -611,17 +612,17 @@ class pgcontroller extends Controller
                         $is_avaiable = 0;
                         if ($is_avaiable==0) {
                             $coun[] = array(
-                                'coupon_code' => $coupon->coupon_code, 
-                                'coupon_condition' => $coupon->coupon_condition, 
-                                'coupon_number' => $coupon->coupon_number, 
+                                'coupon_code' => $coupon->coupon_code,
+                                'coupon_condition' => $coupon->coupon_condition,
+                                'coupon_number' => $coupon->coupon_number,
                             );
                             Session::put('coupon',$coun);
                         }
                     }else{
                         $coun[] = array(
-                                'coupon_code' => $coupon->coupon_code, 
-                                'coupon_condition' => $coupon->coupon_condition, 
-                                'coupon_number' => $coupon->coupon_number, 
+                                'coupon_code' => $coupon->coupon_code,
+                                'coupon_condition' => $coupon->coupon_condition,
+                                'coupon_number' => $coupon->coupon_number,
                             );
                         Session::put('coupon',$coun);
                     }
@@ -674,7 +675,7 @@ class pgcontroller extends Controller
     public function postVnpay_online(Request $req){
         // dd($req->all());
         $cart = Session::get('cart');
-        $vnp_TxnRef = substr(md5(microtime()),rand(0,26),5); 
+        $vnp_TxnRef = substr(md5(microtime()),rand(0,26),5);
         $vnp_OrderInfo = "Xem nao";
         $vnp_OrderType = "Đoán xem";
 
@@ -689,7 +690,7 @@ class pgcontroller extends Controller
                     $totalPrice = $total_coupon;
                 }
             }
-            $vnp_Amount = $totalPrice * 100;    
+            $vnp_Amount = $totalPrice * 100;
         }else{
             $vnp_Amount = ($cart->totalPrice) * 100;
         }
@@ -707,16 +708,16 @@ class pgcontroller extends Controller
         $code_order = $vnp_TxnRef;
         $BankCode_order = $vnp_BankCode;
 
-        
+
         $count_order[] = array(
-            'name_order' => $name_order, 
-            'gender_order' => $gender_order, 
-            'email_order' => $email_order, 
-            'address_order' => $address_order, 
-            'phone_number_order' => $phone_number_order, 
-            'note_order' => $note_order, 
-            'code_order' => $code_order, 
-            'BankCode_order' => $BankCode_order, 
+            'name_order' => $name_order,
+            'gender_order' => $gender_order,
+            'email_order' => $email_order,
+            'address_order' => $address_order,
+            'phone_number_order' => $phone_number_order,
+            'note_order' => $note_order,
+            'code_order' => $code_order,
+            'BankCode_order' => $BankCode_order,
         );
         Session::put('order_customer',$count_order);
 
@@ -752,7 +753,7 @@ class pgcontroller extends Controller
             }
             $query .= urlencode($key) . "=" . urlencode($value) . '&';
         }
-       
+
 
         $vnp_Url = env('VNP_URL') . "?" . $query;
         if (env('VNP_HASH_SECRET')) {
@@ -767,11 +768,11 @@ class pgcontroller extends Controller
     public function getVnpay_return(Request $req){
         // dd($req->toArray());
         if ($req->vnp_ResponseCode == "00") {
-            
-        
+
+
         $cart = Session::get('cart');
         $ordercart = Session::get('order_customer');
-        
+
 
         foreach ($ordercart as $key => $value1) {
             $bank = $value1['BankCode_order'];
@@ -798,18 +799,18 @@ class pgcontroller extends Controller
                         $totalPrice = $total_coupon;
                     }
                 }
-                $bill->total = $totalPrice;    
+                $bill->total = $totalPrice;
             }else{
                 $bill->total = $cart->totalPrice;
             }
             $bill->payment = $req->vnp_CardType;
-            $bill->status_bill = $req=0;
+            $bill->status_bill = 0;
             $bill->order_code = $value1['code_order'];;
             $bill->save();
         }
 
 
-        
+
 
         foreach ($cart->items as $key => $value) {
             $bill_detail = new BillDetail();
@@ -833,12 +834,12 @@ class pgcontroller extends Controller
             foreach(Session::get('coupon') as $key => $coun){
                 $coupon_qty = Coupon::where('coupon_code',$coun['coupon_code'])->first();
                 if (!Session::get('user_name_login')) {
-                    $coupon_qty->coupon_used = ','.Auth::user()->id;
+                    $coupon_qty->coupon_used = ','.Auth()->user()->id;
                 }else{
                     $coupon_qty->coupon_used = ','.Session::get('user_id_login');
                 }
                 $coupon_qty->coupon_qty--;
-                $coupon_qty->save(); 
+                $coupon_qty->save();
             }
         }
 
@@ -861,7 +862,7 @@ class pgcontroller extends Controller
                                  );
 
 
-        Mail::send('email.mail_oder', 
+        Mail::send('email.mail_oder',
             [
                 'items' => $cart->items,
                 'multisp' => $multisp,
@@ -876,7 +877,7 @@ class pgcontroller extends Controller
         Session::forget('order_customer');
         Session::forget('pay');
 
-        
+
         return redirect()->route('dathang')->with('thongbao','Đặt hàng thành công');
         }
 

@@ -42,11 +42,7 @@
                         <i class="fa fa-plus" aria-hidden="true"></i> {{ trans('home_ad.add') }}
                     </button>
                 </tr>
-                <tr>
-                    <button style="margin-left: 10px" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ExcelLang"><i class="fas fa-file-excel"></i>
-                        {{ trans('home_ad.import') }} / {{ trans('home_ad.export') }} Excel
-                    </button>
-                </tr>
+                <!-- Import/Export Excel button removed -->
             </table>
         </div>
         <div class="card-body">
@@ -59,7 +55,7 @@
                             <th>{{ trans('home.languagevi') }}</th>
                             <th>{{ trans('home.languageen') }}</th>
                             <th>
-                                @if(config('app.locale') != 'vi') 
+                                @if(config('app.locale') != 'vi')
                                     {{ trans('Ql_sp.mota') }} en
                                 @else
                                     {{ trans('Ql_sp.mota') }} vi
@@ -67,7 +63,7 @@
                             </th>
                             <th>Url</th>
                             <th>{{ trans('Ql_sp.sua_xoa') }}</th>
-                            
+
                         </tr>
                     </thead>
                     <tfoot style="text-align: center;">
@@ -76,7 +72,7 @@
                             <th>{{ trans('home.languagevi') }}</th>
                             <th>{{ trans('home.languageen') }}</th>
                             <th>
-                                @if(config('app.locale') != 'vi') 
+                                @if(config('app.locale') != 'vi')
                                     {{ trans('Ql_sp.mota') }} en
                                 @else
                                     {{ trans('Ql_sp.mota') }} vi
@@ -118,7 +114,7 @@
                                         <div class="modal-body">Chọn "Delete" bên dưới nếu bạn đã chắc chắn muốn xóa.</div>
                                         <div class="modal-footer">
                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Huỷ bỏ</button>
-                           
+
                                             <form method="" action="{{route('deletenn',$nnnn->id_post)}}">
 
                                                 <button type="submit" class="btn btn-danger">
@@ -148,7 +144,7 @@
                                             <div class="modal-body">
                                                 <div class="form-group">
                                                     <label style="font-weight: bold; color: #000" >Name Product_vi</label>
-                                                    <input type="text" id="sp_vi_{{$nnnn->id_post}}" name="sp_vi" class="form-control" value="{{$nnnn->sp_vi}}" 
+                                                    <input type="text" id="sp_vi_{{$nnnn->id_post}}" name="sp_vi" class="form-control" value="{{$nnnn->sp_vi}}"
                                                     />
 
                                                 </div>
@@ -177,7 +173,7 @@
                                         </form>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
 
                         </tr>
                     @endforeach
@@ -191,56 +187,7 @@
 
     </div>
 
-        <!-- Import Export Excel -->
-    <div class="modal" id="ExcelLang">
-        <div class="modal-dialog">
-          <div class="modal-content">
-          
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">{{ trans('home_ad.import') }} / {{ trans('home_ad.export') }} Excel</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div style="margin-top: 15px; margin-bottom: 10px; margin-left: 2px">
-                    <table>
-                        <tr>
-                            <form action="{{url('/import-excel-lang')}}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <!-- <input type="file" name="file" id="file" accept=".xlsx" required><br><br> -->
-                                <!-- <input type="submit" value="{{ trans('home_ad.import') }} Excel" name="import_lang" class="btn btn-primary" style="margin-right: 10px;"> -->
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="file" id="file" accept=".xlsx" required>
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
-                                </div><br><br>
-                                <button class="btn btn-outline-primary" type="submit" name="import_lang" style="margin-right: 10px;">
-                                    <i class="fas fa-file-import" aria-hidden="true"></i> {{ trans('home_ad.import') }} Excel
-                                </button>
-                            </form>
-                        </tr>
-                        <tr>
-                            <form action="{{url('/export-excel-lang')}}" method="POST">
-                                @csrf
-                                <!-- <input type="submit" value="{{ trans('home_ad.export') }} Excel" name="export_lang" class="btn btn-success"> -->
-                                <button class="btn btn-outline-success" type="submit" name="export_lang">
-                                    <i class="fas fa-file-export" aria-hidden="true"></i> {{ trans('home_ad.export') }} Excel
-                                </button>
-                            </form>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-            
-          </div>
-        </div>
-    </div>
+    <!-- Import/Export Excel modal removed -->
 
     <!-- Modal Add-->
     <div class="modal fade" id="nnAdd" tabindex="-1" role="dialog" style="z-index: 1050; display: none;" aria-hidden="true">
@@ -286,13 +233,13 @@
                 </form>
             </div>
         </div>
-    </div> 
+    </div>
 
 <style type="text/css">
 
     .classs-style li{
         list-style-type: none;
     }
- 
+
 </style>
 @endsection

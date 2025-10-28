@@ -60,7 +60,7 @@
                        <tr>
                             <td>{{$key+=1}}</td>
                             <td>
-                                @if(config('app.locale') != 'vi') 
+                                @if(config('app.locale') != 'vi')
                                     {{$sp->sp_en}}
                                 @else
                                     {{$sp->sp_vi}}
@@ -69,7 +69,7 @@
                             <td>{{$sp->product_quantity}}</td>
                             <td class="hiden-text">
                                 <p>
-                                    @if(config('app.locale') != 'vi') 
+                                    @if(config('app.locale') != 'vi')
                                         {!! $sp->description_en !!}
                                     @else
                                         {!! $sp->description_vi !!}
@@ -94,7 +94,7 @@
                                     <a href="{{url('/active-sp/'.$sp->id)}}"><span class="far fa-thumbs-up"></span></a>
                                     <?php
                                      }else{
-                                    ?>  
+                                    ?>
                                      <a href="{{url('/unactive-sp/'.$sp->id)}}"><span style="color: #e74a3b;" class="far fa-thumbs-down"></span></a>
                                     <?php
                                    }
@@ -124,7 +124,7 @@
                                         <div class="modal-body">Chọn "Delete" bên dưới nếu bạn đã chắc chắn muốn xóa.</div>
                                         <div class="modal-footer">
                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Huỷ bỏ</button>
-                           
+
                                             <form method="" action="{{ route('deletensp', $sp->id)}}">
 
                                                 <button type="submit" class="btn btn-danger">
@@ -227,17 +227,17 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="icofont icofont-eye-alt"></i>Close</button>
-                                                
+
                                                 <button type="submit"  class="btn btn-primary"><i class="icofont icofont-check-circled"></i>{{ trans('home.up_date') }}</button>
-                                                
+
 
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
 
-                       
+
                         </tr>
                     @endforeach
 
@@ -251,49 +251,7 @@
 
     </div>
 
-     <!-- Import Export Excel -->
-    <div class="modal" id="ExcelProduct">
-        <div class="modal-dialog">
-          <div class="modal-content">
-          
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">{{ trans('home_ad.import') }} / {{ trans('home_ad.export') }} Excel</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div style="margin-top: 15px; margin-bottom: 10px; margin-left: 22px">
-                    <table>
-        <!--                 <tr>
-                            <form action="{{url('/import-excel-product')}}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <input type="file" name="file" id="file" accept=".xlsx" required><br><br>
-                                <input type="submit" value="{{ trans('home_ad.imexport') }} Excel" name="import_product" class="btn btn-primary" style="margin-right: 10px;">
-                            </form>
-                        </tr> -->
-                        <tr>
-                            <form action="{{url('/export-excel-product')}}" method="POST">
-                                @csrf
-                                <!-- <input type="submit" value="{{ trans('home_ad.export') }} Excel" name="export_product" class="btn btn-success"> -->
-                                <button class="btn btn-outline-success" type="submit" name="export_product">
-                                    <i class="fas fa-file-export" aria-hidden="true"></i> {{ trans('home_ad.export') }} Excel
-                                </button>
-                            </form>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-            
-          </div>
-        </div>
-    </div>   
+    <!-- Import/Export Excel removed -->
 
 
     <!-- Modal Add-->
@@ -380,13 +338,13 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="icofont icofont-eye-alt"></i>Close</button>
                         <button type="reset" class="btn btn-primary">Resest</button>
                         <button type="submit"  class="btn btn-primary"  onclick="incrementValue()"><i class="icofont icofont-check-circled"></i>Add</button>
-                        
+
 
                     </div>
                 </form>
             </div>
         </div>
-    </div> 
+    </div>
 
 <style type="text/css">
     .col-md-4{

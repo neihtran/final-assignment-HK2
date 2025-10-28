@@ -16,43 +16,43 @@ use App\Models\Statistical;
 use App\Models\Coupon;
 use App\Models\Visitors;
 
-use App\Imports\ImportCoupon;
-use App\Exports\ExportCoupon;
-use App\Imports\ImportPost;
-use App\Exports\ExportPost;
-use App\Imports\ImportSlide;
-use App\Exports\ExportSlide;
-use App\Imports\ImportNsx;
-use App\Exports\ExportNsx;
-// use App\Imports\ImportProduct;
-use App\Exports\ExportProduct;
-use App\Exports\ExportOrderApproved;
-use App\Exports\ExportOrderUnapproved;
-use App\Exports\ExportOrderCancel;
-use App\Exports\ExportOrder;
+// use App\Imports\ImportCoupon;
+// use App\Exports\ExportCoupon;
+// use App\Imports\ImportPost;
+// use App\Exports\ExportPost;
+// use App\Imports\ImportSlide;
+// use App\Exports\ExportSlide;
+// use App\Imports\ImportNsx;
+// use App\Exports\ExportNsx;
+// // use App\Imports\ImportProduct;
+// use App\Exports\ExportProduct;
+// use App\Exports\ExportOrderApproved;
+// use App\Exports\ExportOrderUnapproved;
+// use App\Exports\ExportOrderCancel;
+// use App\Exports\ExportOrder;
 
-use App\Imports\ImportAccount;
-use App\Exports\ExportAllAccount;
-use App\Exports\ExportAdminAccount;
-use App\Exports\ExportUserAccount;
+// use App\Imports\ImportAccount;
+// use App\Exports\ExportAllAccount;
+// use App\Exports\ExportAdminAccount;
+// use App\Exports\ExportUserAccount;
 
 use Auth;
-use DB;
-use Session;
-use Hash;
-use File;
-use PDF;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
+
 use Carbon\Carbon;
 use DNS1D;
 use DNS2D;
-use Mail;
-use Excel;
-
+use Maatwebsite\Excel\Facades\Excel;
 class admincontroller extends Controller
 {
 
     public function getIndexAdminDash(Request $req){
-    	if (Auth::check() && Auth::user()->level == 1) {
+    	if (Auth()->check() && Auth()->user()->level == 1) {
 
             $url_canonical = $req->url();
             // $user_ip_address = '192.168.1.42';
@@ -89,7 +89,7 @@ class admincontroller extends Controller
 
 /*-----------------------------------------------User--------------------------------------------------------------------*/
     public function getQL_NguoiDung(Request $req){
-        if (Auth::check() && Auth::user()->level == 1) {
+        if (Auth()->check() && Auth()->user()->level == 1) {
             $user = User::all();
             $url_canonical = $req->url();
 
@@ -102,7 +102,7 @@ class admincontroller extends Controller
     }
 
     public function getQL_NguoiDung_user(Request $req){
-        if (Auth::check() && Auth::user()->level == 1) {
+        if (Auth()->check() && Auth()->user()->level == 1) {
 
             $taikhoan_user = User::where('level',2)->get();
             $url_canonical = $req->url();
@@ -115,7 +115,7 @@ class admincontroller extends Controller
 
     }
     public function getQL_NguoiDung_ad(Request $req){
-        if (Auth::check() && Auth::user()->level == 1) {
+        if (Auth()->check() && Auth()->user()->level == 1) {
 
             $taikhoan_ad = User::where('level',1)->get();
             $url_canonical = $req->url();
@@ -235,7 +235,7 @@ class admincontroller extends Controller
 
 /*-----------------------------------------------Slide-------------------------------------------------------------------*/
     public function getQL_Slide(Request $req){
-        if (Auth::check() && Auth::user()->level == 1) {
+        if (Auth()->check() && Auth()->user()->level == 1) {
             $slide = Slide::all();
             // $slide = Slide::where('status_slide',0)->get();
             $url_canonical = $req->url();
@@ -304,7 +304,7 @@ class admincontroller extends Controller
             return $req;
             $slide->image = '';
         }
-        $slide->status_slide = $req=0;
+    $slide->status_slide = 0;
 
 
         $slide->save();
@@ -313,7 +313,7 @@ class admincontroller extends Controller
 
 
     public function postUpdateSlide(Request $req, $id){
-        if (Auth::check() && Auth::user()->level == 1) {
+        if (Auth()->check() && Auth()->user()->level == 1) {
             // dd($id);
             $slide_update = Slide::where('id',$id)->first();
             $slide_update->link = $req->link_slide;
@@ -384,7 +384,7 @@ class admincontroller extends Controller
 
 /*-----------------------------------------------NSX--------------------------------------------------------------------*/
     public function getQL_Nsx(Request $req){
-        if (Auth::check() && Auth::user()->level == 1) {
+        if (Auth()->check() && Auth()->user()->level == 1) {
             $nsx = ProductType::orderBy('id', 'desc')->get();
             $url_canonical = $req->url();
 
@@ -521,7 +521,7 @@ class admincontroller extends Controller
 
 /*-----------------------------------------------Sản-Phẩm----------------------------------------------------------------*/
     public function getQL_Sanpham(Request $req){
-        if (Auth::check() && Auth::user()->level == 1) {
+        if (Auth()->check() && Auth()->user()->level == 1) {
 
             // dd(config('app.locale'));
             $sanpham = Product::orderby('id', 'desc')->get();
@@ -621,7 +621,15 @@ class admincontroller extends Controller
         $nn_add->sp_en = $req->sp_en;
         $nn_add->description_vi = $req->description_vi;
         $nn_add->description_en = $req->description_en;
-        $nn_add->product_slug = $req->slug;
+
+        // Đảm bảo product_slug không null
+        if (!empty($req->slug)) {
+            $nn_add->product_slug = $req->slug;
+        } else {
+            // Tạo slug từ tên sản phẩm nếu không có slug được cung cấp
+            $nn_add->product_slug = \Illuminate\Support\Str::slug($req->sp_vi);
+        }
+
         $nn_add->save();
 
         $sp->id_post = $nn_add->id_post;
@@ -656,7 +664,7 @@ class admincontroller extends Controller
 
 
     public function postUpdateSp(Request $req, $id){
-        if (Auth::check()) {
+        if (Auth()->check()) {
             $sp_update = Product::join('post', 'products.id_post', '=', 'post.id_post')->where('id',$id)->first();
             $up_nn = Post::where('id_post',$sp_update->id_post)->first();
             // dd($up_nn);
@@ -756,7 +764,7 @@ class admincontroller extends Controller
 
     public function getDonHang(Request $req)
     {
-        if (Auth::check()) {
+        if (Auth()->check()) {
 
 
             $donhang = Bill::join('customer', 'customer.id', '=', 'bills.id_customer')->orderby('id_bill', 'DESC')->get();
@@ -772,7 +780,7 @@ class admincontroller extends Controller
     }
     public function getDonHang_daduyet(Request $req)
     {
-        if (Auth::check()) {
+        if (Auth()->check()) {
 
             $donhang_daduyet = Bill::join('customer', 'customer.id', '=', 'bills.id_customer')->where('status_bill',1)->orderby('id_bill', 'desc')->get();
             $url_canonical = $req->url();
@@ -787,7 +795,7 @@ class admincontroller extends Controller
     }
     public function getDonHang_chuaduyet(Request $req)
     {
-        if (Auth::check()) {
+        if (Auth()->check()) {
 
             $donhang_chuaduyet = Bill::join('customer', 'customer.id', '=', 'bills.id_customer')->where('status_bill',0)->orderby('id_bill', 'desc')->get();
             $url_canonical = $req->url();
@@ -802,7 +810,7 @@ class admincontroller extends Controller
     }
     public function getDonHang_huy(Request $req)
     {
-        if (Auth::check()) {
+        if (Auth()->check()) {
 
             $donhang_huy = Bill::join('customer', 'customer.id', '=', 'bills.id_customer')->where('status_bill',2)->orderby('id_bill', 'desc')->get();
             $url_canonical = $req->url();
@@ -834,7 +842,7 @@ class admincontroller extends Controller
 
     public function getChiTietDonHang($id, Request $req)
     {
-        if (Auth::check()) {
+        if (Auth()->check()) {
 
 
             $billdetaill =DB::select("SELECT bt.id_bill_detail, bt.id_bill, bt.id_product, bt.id_post_bill_detail, bt.order_code, bt.quantity,
@@ -957,7 +965,7 @@ class admincontroller extends Controller
     }
 
     public function print_order($checkout_code){
-        $pdf = \App::make('dompdf.wrapper');
+        $pdf = App::make('dompdf.wrapper');
         $pdf->loadHTML($this->print_order_convert($checkout_code));
         return $pdf->stream();
     }
@@ -996,15 +1004,15 @@ class admincontroller extends Controller
           <span text-align: center>'.DNS2D :: getBarcodeHTML ( $tonghop, 'QRCODE',6.5,5).' </span>
         </p>
         <div style="float: left; margin: 0 0 1.5em 0; ">
-         <strong style="font-size: 18px;">PhongVu</strong>
+         <strong style="font-size: 18px;">neihT</strong>
           <br />
-          <strong>Địa chỉ:</strong> 1XX Bình Dương, TDM.
+          <strong>Địa chỉ:</strong> 30 Phùng Chí Kiên, Phường Hoàng Mai, Tỉnh Nghệ An.
           <br/>
-          <strong>Điện thoại:</strong> 0773654031
+          <strong>Điện thoại:</strong> 0376218642
           <br/>
-          <strong>Website:</strong> PhongVu.demo
+          <strong>Website:</strong> neihT.demo
           <br/>
-          <strong>Email:</strong> npn0208@gmail.com
+          <strong>Email:</strong> thiennd.144010124006@vtc.edu.vn
         </div>
         <div style="clear:both"></div>
         <table style="width: 100%"><tr><td valign="top" style="width: 65%">
@@ -1091,7 +1099,7 @@ class admincontroller extends Controller
 /*-----------------------------------------------Lang---------------------------------------------------------------*/
 
     public function getQL_NN(Request $req){
-        if (Auth::check() && Auth::user()->level == 1) {
+        if (Auth()->check() && Auth()->user()->level == 1) {
             $ngonngu = Post::all();
             $url_canonical = $req->url();
 
@@ -1108,12 +1116,13 @@ class admincontroller extends Controller
             [
                 'sp_vi'=>'required',
                 'sp_en'=>'required',
+                'slug'=>'required',
 
             ],
             [
                 'sp_vi.required'=>'Vui lòng nhập vi',
                 'sp_en.required'=>'Vui lòng nhập en',
-
+                'slug.required'=>'Vui lòng nhập URL',
 
             ]);
         }else{
@@ -1121,6 +1130,7 @@ class admincontroller extends Controller
             [
                 'sp_vi'=>'required',
                 'sp_en'=>'required',
+                'slug'=>'required',
 
             ]);
         }
@@ -1145,7 +1155,7 @@ class admincontroller extends Controller
 
 
     public function postUpdateNn(Request $req, $id){
-        if (Auth::check()) {
+        if (Auth()->check()) {
             if(Session::get('locale') == 'vi' || Session::get('locale') == null){
                 $this->validate($req,
                 [
@@ -1263,7 +1273,7 @@ class admincontroller extends Controller
     // coupon
     public function getCoupon(Request $req){
 
-        if (Auth::check()) {
+        if (Auth()->check()) {
 
             $month_now = Carbon::now('Asia/Ho_Chi_Minh')->month;
             $day_now = Carbon::now('Asia/Ho_Chi_Minh')->day;
@@ -1320,7 +1330,7 @@ class admincontroller extends Controller
         $addcoupon->coupon_condition  = $req->coupon_condition;
         $addcoupon->coupon_date_start  = $req->coupon_date_start;
         $addcoupon->coupon_date_end  = $req->coupon_date_end;
-        $addcoupon->coupon_status  = $req=0;
+    $addcoupon->coupon_status  = 0;
 
         $addcoupon->save();
         return redirect()->route('quanlycoupon')->with('thongbao', 'Thêm mới thành công!');
@@ -1337,7 +1347,7 @@ class admincontroller extends Controller
 
 
     public function postUpdate_Coupon(Request $req, $id){
-        if (Auth::check()) {
+        if (Auth()->check()) {
             if(Session::get('locale') == 'vi' || Session::get('locale') == null){
                 $this->validate($req,
                 [
@@ -1370,7 +1380,7 @@ class admincontroller extends Controller
             $update_cp->coupon_condition  = $req->coupon_condition;
             $update_cp->coupon_date_start  = $req->coupon_date_start;
             $update_cp->coupon_date_end  = $req->coupon_date_end;
-            $update_cp->coupon_status  = $req=0;
+            $update_cp->coupon_status  = 0;
 
 
             $update_cp->save();
@@ -1411,150 +1421,150 @@ class admincontroller extends Controller
     public function unactive_coupon($id){
         Coupon::where('coupon_id',$id)->update(['coupon_status'=>1]);
         return redirect()->back();
-    }
+    }}
 
 
 
-// -----------------------------------------------------------Excel---------------------------------------------------
+// // -----------------------------------------------------------Excel---------------------------------------------------
 
-    //coupon
-    public function export_excel_coupon(){
-        return Excel::download(new ExportCoupon , 'coupon.xlsx');
-    }
-    public function import_excel_coupon(Request $req){
+//     //coupon
+//     public function export_excel_coupon(){
+//         return Excel::download(new ExportCoupon , 'coupon.xlsx');
+//     }
+//     public function import_excel_coupon(Request $req){
 
-        $file = $req->file('file')->getRealPath();
-        $import = new ImportCoupon;
-        $import->import($file);
+//         $file = $req->file('file')->getRealPath();
+//         $import = new ImportCoupon;
+//         $import->import($file);
 
-        if ($import->failures()->isNotEmpty()) {
-            return back()->withFailures($import->failures());
-        }
+//         if ($import->failures()->isNotEmpty()) {
+//             return back()->withFailures($import->failures());
+//         }
 
-        return back()->with('thongbao', 'Cập nhật thành công!');
-    }
+//         return back()->with('thongbao', 'Cập nhật thành công!');
+//     }
 
-    //lang
-    public function export_excel_lang(){
-        return Excel::download(new ExportPost , 'post.xlsx');
-    }
-    public function import_excel_lang(Request $req){
-        if(Session::get('locale') == 'vi' || Session::get('locale') == null){
-            $resuft_tb = trans('home_ad.importexcel', [], 'vi');
+//     //lang
+//     public function export_excel_lang(){
+//         return Excel::download(new ExportPost , 'post.xlsx');
+//     }
+//     public function import_excel_lang(Request $req){
+//         if(Session::get('locale') == 'vi' || Session::get('locale') == null){
+//             $resuft_tb = trans('home_ad.importexcel', [], 'vi');
 
-        }else{
-            $resuft_tb = trans('home_ad.importexcel', [], 'en');
-        }
-        $file = $req->file('file')->getRealPath();
-        $import = new ImportPost;
-        $import->import($file);
+//         }else{
+//             $resuft_tb = trans('home_ad.importexcel', [], 'en');
+//         }
+//         $file = $req->file('file')->getRealPath();
+//         $import = new ImportPost;
+//         $import->import($file);
 
-        if ($import->failures()->isNotEmpty()) {
-            return back()->withFailures($import->failures());
-        }
-        return back()->with('thongbao', ''.$resuft_tb.'');
-    }
+//         if ($import->failures()->isNotEmpty()) {
+//             return back()->withFailures($import->failures());
+//         }
+//         return back()->with('thongbao', ''.$resuft_tb.'');
+//     }
 
-    //slide
-    public function export_excel_slide(){
-        return Excel::download(new ExportSlide , 'slide.xlsx');
-    }
-    public function import_excel_slide(Request $req){
-        if(Session::get('locale') == 'vi' || Session::get('locale') == null){
-            $resuft_tb = trans('home_ad.importexcel', [], 'vi');
+//     //slide
+//     public function export_excel_slide(){
+//         return Excel::download(new ExportSlide , 'slide.xlsx');
+//     }
+//     public function import_excel_slide(Request $req){
+//         if(Session::get('locale') == 'vi' || Session::get('locale') == null){
+//             $resuft_tb = trans('home_ad.importexcel', [], 'vi');
 
-        }else{
-            $resuft_tb = trans('home_ad.importexcel', [], 'en');
-        }
-        $file = $req->file('file')->getRealPath();
-        $import = new ImportSlide;
-        $import->import($file);
+//         }else{
+//             $resuft_tb = trans('home_ad.importexcel', [], 'en');
+//         }
+//         $file = $req->file('file')->getRealPath();
+//         $import = new ImportSlide;
+//         $import->import($file);
 
-        if ($import->failures()->isNotEmpty()) {
-            return back()->withFailures($import->failures());
-        }
+//         if ($import->failures()->isNotEmpty()) {
+//             return back()->withFailures($import->failures());
+//         }
 
-        return back()->with('thongbao', ''.$resuft_tb.'');
-    }
+//         return back()->with('thongbao', ''.$resuft_tb.'');
+//     }
 
-    //nsx
-    public function export_excel_nsx(){
-        return Excel::download(new ExportNsx , 'type_products.xlsx');
-    }
-    public function import_excel_nsx(Request $req){
+//     //nsx
+//     public function export_excel_nsx(){
+//         return Excel::download(new ExportNsx , 'type_products.xlsx');
+//     }
+//     public function import_excel_nsx(Request $req){
 
-        if(Session::get('locale') == 'vi' || Session::get('locale') == null){
-            $resuft_tb = trans('home_ad.importexcel', [], 'vi');
+//         if(Session::get('locale') == 'vi' || Session::get('locale') == null){
+//             $resuft_tb = trans('home_ad.importexcel', [], 'vi');
 
-        }else{
-            $resuft_tb = trans('home_ad.importexcel', [], 'en');
-        }
-        $file = $req->file('file')->getRealPath();
-        $import = new ImportNsx;
-        $import->import($file);
+//         }else{
+//             $resuft_tb = trans('home_ad.importexcel', [], 'en');
+//         }
+//         $file = $req->file('file')->getRealPath();
+//         $import = new ImportNsx;
+//         $import->import($file);
 
-        if ($import->failures()->isNotEmpty()) {
-            return back()->withFailures($import->failures());
-        }
+//         if ($import->failures()->isNotEmpty()) {
+//             return back()->withFailures($import->failures());
+//         }
 
-        return back()->with('thongbao', ''.$resuft_tb.'');
-    }
+//         return back()->with('thongbao', ''.$resuft_tb.'');
+//     }
 
-    //san pham
-    public function export_excel_product(){
-        return Excel::download(new ExportProduct , 'products.xlsx');
-    }
-    // public function import_excel_product(Request $req){
-    //     $path = $req->file('file')->getRealPath();
-    //     Excel::import(new ImportProduct, $path);
-    //     return back()->with('thongbaoupdate', 'Update Successful');
-    // }
+//     //san pham
+//     public function export_excel_product(){
+//         return Excel::download(new ExportProduct , 'products.xlsx');
+//     }
+//     // public function import_excel_product(Request $req){
+//     //     $path = $req->file('file')->getRealPath();
+//     //     Excel::import(new ImportProduct, $path);
+//     //     return back()->with('thongbaoupdate', 'Update Successful');
+//     // }
 
 
-    //don hang
-    public function export_excel_dh(){
-        return Excel::download(new ExportOrder , 'Order.xlsx');
-    }
-    //don hang da duyet
-    public function export_excel_dh_da_duyet(){
-        return Excel::download(new ExportOrderApproved , 'OrderApproved.xlsx');
-    }
-    //don hang chua duyet
-    public function export_excel_dh_chua_duyet(){
-        return Excel::download(new ExportOrderUnapproved , 'OrderUnapproved.xlsx');
-    }
-    //don hang huy
-    public function export_excel_dh_huy(){
-        return Excel::download(new ExportOrderCancel , 'OrderCancel.xlsx');
-    }
+//     //don hang
+//     public function export_excel_dh(){
+//         return Excel::download(new ExportOrder , 'Order.xlsx');
+//     }
+//     //don hang da duyet
+//     public function export_excel_dh_da_duyet(){
+//         return Excel::download(new ExportOrderApproved , 'OrderApproved.xlsx');
+//     }
+//     //don hang chua duyet
+//     public function export_excel_dh_chua_duyet(){
+//         return Excel::download(new ExportOrderUnapproved , 'OrderUnapproved.xlsx');
+//     }
+//     //don hang huy
+//     public function export_excel_dh_huy(){
+//         return Excel::download(new ExportOrderCancel , 'OrderCancel.xlsx');
+//     }
 
-    // nhap xuat tai khoan
-    public function import_account(Request $req){
+//     // nhap xuat tai khoan
+//     public function import_account(Request $req){
 
-        if(Session::get('locale') == 'vi' || Session::get('locale') == null){
-            $resuft_tb = trans('home_ad.importexcel', [], 'vi');
+//         if(Session::get('locale') == 'vi' || Session::get('locale') == null){
+//             $resuft_tb = trans('home_ad.importexcel', [], 'vi');
 
-        }else{
-            $resuft_tb = trans('home_ad.importexcel', [], 'en');
-        }
-        $file = $req->file('file')->getRealPath();
-        $import = new ImportAccount;
-        $import->import($file);
+//         }else{
+//             $resuft_tb = trans('home_ad.importexcel', [], 'en');
+//         }
+//         $file = $req->file('file')->getRealPath();
+//         $import = new ImportAccount;
+//         $import->import($file);
 
-        if ($import->failures()->isNotEmpty()) {
-            return back()->withFailures($import->failures());
-        }
+//         if ($import->failures()->isNotEmpty()) {
+//             return back()->withFailures($import->failures());
+//         }
 
-        return back()->with('thongbao', ''.$resuft_tb.'');
-    }
-    public function export_excel_all_account(){
-        return Excel::download(new ExportAllAccount , 'users.xlsx');
-    }
-    public function export_admin_account(){
-        return Excel::download(new ExportAdminAccount , 'users_admin.xlsx');
-    }
-    public function export_excel_user_account(){
-        return Excel::download(new ExportUserAccount , 'users_user.xlsx');
-    }
+//         return back()->with('thongbao', ''.$resuft_tb.'');
+//     }
+//     public function export_excel_all_account(){
+//         return Excel::download(new ExportAllAccount , 'users.xlsx');
+//     }
+//     public function export_admin_account(){
+//         return Excel::download(new ExportAdminAccount , 'users_admin.xlsx');
+//     }
+//     public function export_excel_user_account(){
+//         return Excel::download(new ExportUserAccount , 'users_user.xlsx');
+//     }
 
-}
+// }

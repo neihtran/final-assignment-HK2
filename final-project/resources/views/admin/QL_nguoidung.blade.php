@@ -21,8 +21,8 @@
         @endforeach
     </div>
     @endif -->
-<!--     @if(Session::has('thongbao')) 
-        <div class="alert alert-success" style="width: 100%">{{Session::get('thongbao')}}</div> 
+<!--     @if(Session::has('thongbao'))
+        <div class="alert alert-success" style="width: 100%">{{Session::get('thongbao')}}</div>
     @endif -->
     @if(session()->has('failures'))
         <div class="alert table-danger classs-style  alert-dismissible fade show">
@@ -60,11 +60,7 @@
                     <i class="fa fa-plus" aria-hidden="true"></i> {{ trans('home_ad.add') }}
                 </button>
             </tr>
-            <tr>
-                <button style="margin-left: 10px" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ExcelProduct">
-                    <i class="fas fa-file-excel"></i> {{ trans('home_ad.import') }} / {{ trans('home_ad.export') }} Excel
-                </button>
-            </tr>
+            <!-- Import/Export Excel button removed -->
         </table>
     </div>
     <div class="card-body">
@@ -114,7 +110,7 @@
                                     <a href="{{url('/active-user/'.$usr->id)}}" class="tag-style still-term"><span class="fas fa-user-secret"></span></a>
                                     <?php
                                      }else{
-                                    ?>  
+                                    ?>
                                      <a href="{{url('/unactive-user/'.$usr->id)}}" class="tag-style expired"><span style="color: #e74a3b;" class="fas fa-user"></span></a>
                                     <?php
                                    }
@@ -129,7 +125,7 @@
                                 <button class="btn btn-danger delete" type="button"><i class="fas fa-trash-alt"></i></button>
 
                                 </a>
-            
+
 
                             </td> -->
                              <td>
@@ -141,7 +137,7 @@
                                 <!-- </a> -->
                             </td>
 
-                            
+
                             <!-- Modal Delete-->
                             <div class="modal fade" id="allDel_{{$usr->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -155,9 +151,9 @@
                                         <div class="modal-body">Chọn "Delete" bên dưới nếu bạn đã chắc chắn muốn xóa.</div>
                                         <div class="modal-footer">
                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Huỷ bỏ</button>
-                              
+
                                             <form method="" action="{{route('delete',$usr->id)}}">
-                                                
+
                                                 <button type="submit" class="btn btn-danger">
                                                     Delete
                                                 </button>
@@ -167,7 +163,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- Modal Update-->
                             <div class="modal fade" id="alluserUpdate_{{$usr->id}}" tabindex="-1" role="dialog" style="z-index: 1050; display: none;" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
@@ -189,7 +185,7 @@
                                             </div>
                                             @endif
                                             @if(Session::has('thongbao'))
-                                                <div class="alert alert-success" style="width: 100%">{{Session::get('thongbao')}}</div> 
+                                                <div class="alert alert-success" style="width: 100%">{{Session::get('thongbao')}}</div>
                                             @endif
                                             <div class="modal-body">
                                                 <div class="form-group">
@@ -234,13 +230,13 @@
                         </tr>
                         @endforeach
                     </tbody>
-                    
+
                 </table>
 
             </form>
         </div>
     </div>
- 
+
 </div>
 
 <!-- Modal Add-->
@@ -264,7 +260,7 @@
                 </div>
                 @endif
                 @if(Session::has('thongbao'))
-                    <div class="alert alert-success" style="width: 100%">{{Session::get('thongbao')}}</div> 
+                    <div class="alert alert-success" style="width: 100%">{{Session::get('thongbao')}}</div>
                 @endif -->
                 <div class="modal-body">
                     <div class="form-group">
@@ -311,80 +307,7 @@
     </div>
 </div>
 
-<!-- Import Export Excel -->
-<div class="modal" id="ExcelProduct">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">{{ trans('home_ad.import') }} / {{ trans('home_ad.export') }} Excel</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <style type="text/css">
-            .tabledh{
-                margin-right: 22px;
-                margin-bottom: 22px;
-            }
-            .tableright{
-                margin-bottom: 22px;
-            }
-        </style>
-        <!-- Modal body -->
-        <div class="modal-body">
-            <div style="margin-top: 15px; margin-bottom: 10px; margin-left: 2px">
-                <table class="tabledh">
-                    <tr>
-                        <form action="{{url('/export-excel-all-account')}}" method="POST">
-                            @csrf
-                            <button class="btn btn-outline-success tabledh" type="submit" name="export_alluser">
-                                <i class="fas fa-file-export" aria-hidden="true"></i> {{ trans('home_ad.export_alluser') }}
-                            </button>
-                        </form>
-                    </tr>
-                    <tr>
-                        <form action="{{url('/export-excel-admin-account')}}" method="POST">
-                            @csrf
-                            <button class="btn btn-outline-primary tabledh" type="submit" name="export_admin">
-                                <i class="fas fa-file-export" aria-hidden="true"></i> {{ trans('home_ad.export_admin') }}
-                            </button>
-                        </form>
-                    </tr>
-                    <tr>
-                        <form action="{{url('/export-excel-user-account')}}" method="POST">
-                            @csrf
-                            <!-- <input type="submit" value="{{ trans('home_ad.export') }} Excel" name="export_dh_da_duyet" class="btn btn-outline-success"> -->
-                            <button class="btn btn-outline-danger tableright" type="submit" name="export_user">
-                                <i class="fas fa-file-export" aria-hidden="true"></i> {{ trans('home_ad.export_user') }}
-                            </button>
-                        </form>
-                    </tr>
-                    <div class="modal-footer"></div>
-                    <tr>
-                        <form action="{{url('/import-excel-account')}}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <!-- <input type="file" name="file" id="file" accept=".xlsx" required><br><br> -->
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="file" id="file" accept=".xlsx" required>
-                                <label class="custom-file-label" for="customFile">Choose file</label>
-                            </div><br><br>
-                            <button class="btn btn-outline-info" type="submit" name="import_account" style="margin-right: 10px;">
-                                <i class="fas fa-file-import" aria-hidden="true"></i> {{ trans('home_ad.import') }} Excel
-                            </button>
-                        </form>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-        
-      </div>
-    </div>
-</div>
+<!-- Import/Export Excel modal removed -->
 
 <style type="text/css">
 

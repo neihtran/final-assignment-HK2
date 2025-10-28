@@ -1,5 +1,5 @@
 @extends('Layout')
-@section('title')    
+@section('title')
     {{ trans('home.producttt') }}
 @endsection
 @section('content-layout')
@@ -36,7 +36,7 @@
                 @else
                 {{number_format($sanpham->promotion_price,0,',','.')}} VNĐ
                 @endif" >
-                
+
                 <input type="hidden" id="instock{{$sanpham->id}}" value="
                  @if($sanpham->product_quantity>0)
                  {{ trans('home.INSTOCK') }}
@@ -81,11 +81,11 @@
                                         $styte_star = 'fa-star-o';
                                         $color = 'color:#F39C11;';
                                     }
-                                
+
                                 @endphp
                                 <!-- Single Review List Start -->
-                                <i 
-                                    title="star_rating" 
+                                <i
+                                    title="star_rating"
                                     class="fa {{$styte_star}} rating"
                                     style="cursor:pointer; {{$color}}  font-size:14px; ">
                                 </i>
@@ -100,12 +100,12 @@
                         </div>
                         <div class="pro-price mtb-30">
                             <p class="d-flex align-items-center">
-                            	
+
                             	@if($sanpham->promotion_price == 0)
                             	<span class="price">{{number_format($sanpham->unit_price,0,',','.')}} VNĐ</span>
-                            	@else
-                            	<span class="prev-price">{{number_format($sanpham->unit_price,0,',','.')}} VNĐ</span>
-                            	<span class="price">{{number_format($sanpham->promotion_price,0,',','.')}} VNĐ</span><span class="saving-price">save {{number_format(100-($sanpham->promotion_price/$sanpham->unit_price)*100)}} %</span>
+                                @else
+                                <span class="prev-price">{{number_format($sanpham->unit_price,0,',','.')}} VNĐ</span>
+                                <span class="price">{{number_format($sanpham->promotion_price,0,',','.')}} VNĐ</span><span class="saving-price">sale {{number_format(100-($sanpham->promotion_price/$sanpham->unit_price)*100)}} %</span>
                             	@endif
                             </p>
                         </div>
@@ -124,15 +124,15 @@
                             <div class="pro-actions">
                                 <div class="actions-primary">
                                 	@if($sanpham->product_quantity>0)
-                                    <a id="addcart{{$sanpham->id}}" 
-                                        <?php 
+                                    <a id="addcart{{$sanpham->id}}"
+                                        <?php
                                             if(Auth::check() || Session::get('user_name_login')){
                                                 $addnewcart = route('themgiohang',$sanpham->id);
                                             }else{
                                                 $addnewcart = route('dangnhap');
                                             }
-                                        ?> 
-                                        href="{{$addnewcart}}" 
+                                        ?>
+                                        href="{{$addnewcart}}"
                                         title="" data-original-title="{{ trans('home.addcart') }}"> + {{ trans('home.addcart') }}</a>
                                 	@else
                                     <a id="addcart{{$sanpham->id}}" class="disabled-link"> + {{ trans('home.addcart') }}</a>
@@ -153,15 +153,6 @@
                             	@endif
                             </p>
                         </div>
-                        <div class="socila-sharing mt-25">
-                            <ul class="d-flex">
-                                <li>Share</li>
-                                <li><a class="share" href="https://www.facebook.com/sharer/sharer.php?u={{$url_canonical}}&amp;src=sdkpreparse"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-                                <li><a class="share" href="http://twitter.com/share?url={{$url_canonical}}"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a class="share" href="https://plus.google.com/share?url={{$url_canonical}}"><i class="fa fa-google-plus-official" aria-hidden="true"></i></a></li>
-                                <li><a class="share" href="http://pinterest.com/pin/create/button/?url={{$url_canonical}}&description={{$sanpham->$multi_description}}&media={{$image_og}}"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
                 <!-- Thumbnail Description End -->
@@ -181,7 +172,7 @@
                     <li><a class="active" data-toggle="tab" href="#dtail">{{ trans('home.deption') }}</a></li>
                     <li>
                         <a data-toggle="tab" href="#review">
-                            {{ trans('home.commenttrans') }} (<span class="fb-comments-count" data-href="{{$url_canonical}}">0</span>)
+                                {{ trans('home.commenttrans') }} ({{ $rating_count }})
                         </a>
                     </li>
                 </ul>
@@ -202,7 +193,7 @@
                                  @csrf
                                 <input type="hidden" name="comment_product_id" class="comment_product_id" value="{{$sanpham->id}}">
                                  <div id="comment_show"></div>
-                            
+
                             </form>
                             <p class="review-mini-title"><b>{{ trans('home.reviewtrans') }}</b></p>
                             @foreach($sanpham_id as $key => $value)
@@ -217,15 +208,15 @@
                                         $styte_star = 'fa-star-o';
                                         $color = 'color:#F39C11;';
                                     }
-                                
+
                                 @endphp
                                 <!-- Single Review List Start -->
-                                <li 
-                                    title="star_rating" 
-                                    id="{{$value->id}}-{{$count}}" 
-                                    data-index="{{$count}}"  
-                                    data-product_id="{{$value->id}}" 
-                                    data-rating="{{$rating}}" 
+                                <li
+                                    title="star_rating"
+                                    id="{{$value->id}}-{{$count}}"
+                                    data-index="{{$count}}"
+                                    data-product_id="{{$value->id}}"
+                                    data-rating="{{$rating}}"
                                     class="fa {{$styte_star}} rating"
                                     style="cursor:pointer; {{$color}}  font-size:30px; ">
                                 </li>
@@ -274,7 +265,7 @@
                 @else
                 {{number_format($sptt->promotion_price,0,',','.')}} VNĐ
                 @endif" >
-                
+
                 <input type="hidden" id="instock{{$sptt->id}}" value="
                  @if($sptt->product_quantity>0)
                  {{ trans('home.INSTOCK') }}
@@ -305,16 +296,16 @@
                     <div class="pro-actions">
                         <div class="actions-primary">
                             @if($sptt->product_quantity>0)
-                            <a id="addcart{{$sptt->id}}" 
-                                <?php 
+                            <a id="addcart{{$sptt->id}}"
+                                <?php
                                     if(Auth::check() || Session::get('user_name_login')){
                                         $addnewcart = route('themgiohang',$sptt->id);
                                     }else{
                                         $addnewcart = route('dangnhap');
                                     }
-                                ?> 
-                                href="{{$addnewcart}}" 
-                                
+                                ?>
+                                href="{{$addnewcart}}"
+
                                 title="{{ trans('home.addcart') }}"> + {{ trans('home.addcart') }}</a>
                             @else
                             <a id="addcart{{$sptt->id}}" class="disabled-link"> + {{ trans('home.addcart') }}</a>
@@ -332,8 +323,8 @@
                 @endif
             </div>
             @endforeach
-            <!-- Single Product End -->                        
-        </div>                
+            <!-- Single Product End -->
+        </div>
         <!-- Hot Deal Product Active End -->
 
     </div>

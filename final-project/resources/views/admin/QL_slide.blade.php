@@ -42,11 +42,7 @@
                         <i class="fa fa-plus" aria-hidden="true"></i> {{ trans('home_ad.add') }}
                     </button>
                 </tr>
-                <tr>
-                    <button style="margin-left: 10px" type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ExcelSlide"><i class="fas fa-file-excel"></i>
-                        {{ trans('home_ad.import') }} / {{ trans('home_ad.export') }} Excel
-                    </button>
-                </tr>
+                <!-- Import/Export Excel button removed -->
             </table>
         </div>
         <div class="card-body">
@@ -85,7 +81,7 @@
                                     <a href="{{url('/active-slide/'.$sl->id)}}"><span class="fas fa-eye"></span></a>
                                     <?php
                                      }else{
-                                    ?>  
+                                    ?>
                                      <a href="{{url('/unactive-slide/'.$sl->id)}}"><span style="color: #e74a3b;" class="fas fa-eye-slash"></span></a>
                                     <?php
                                    }
@@ -100,7 +96,7 @@
                                 <button class="btn btn-outline-danger delete" data-toggle="modal" data-target="#slideDel_{{$sl->id}}" type="button"><i class="fas fa-trash-alt"></i></button>
                                 <!-- </a> -->
                             </td>
-                            
+
 
                             <!-- Modal Delete-->
                             <div class="modal fade" id="slideDel_{{$sl->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -117,8 +113,8 @@
                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Huỷ bỏ</button>
 
                                             <form method="" action="{{ route('deleteslide', $sl->id  )}}">
-                                                
-                                                
+
+
                                                 <button type="submit" class="btn btn-danger">
                                                     Delete
                                                 </button>
@@ -169,7 +165,7 @@
                                         </form>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
 
                         </tr>
                     @endforeach
@@ -180,66 +176,7 @@
 
     </div>
 
-    <!-- Import Export Excel -->
-    <div class="modal" id="ExcelSlide">
-        <div class="modal-dialog">
-          <div class="modal-content">
-          
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">{{ trans('home_ad.import') }} / {{ trans('home_ad.export') }} Excel</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <style type="text/css">
-                .tabledh{
-                    margin-right: 22px;
-                    margin-bottom: 22px;
-                }
-                .tableright{
-                    margin-bottom: 22px;
-                }
-            </style>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div style="margin-top: 15px; margin-bottom: 10px; margin-left: 2px">
-                    <table>
-                        <tr>
-                            <form action="{{url('/import-excel-slide')}}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <!-- <input type="file" name="file" id="file" accept=".xlsx" required><br><br> -->
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="file" id="file" accept=".xlsx" required>
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
-                                </div><br><br>
-                                <button class="btn btn-outline-primary" type="submit" name="import_slide" style="margin-right: 10px;">
-                                    <i class="fas fa-file-import" aria-hidden="true"></i> {{ trans('home_ad.import') }} Excel
-                                </button>
-                            </form>
-                        </tr>
-
-                        <tr>
-                            <form action="{{url('/export-excel-slide')}}" method="POST">
-                                @csrf
-                                <!-- <input type="submit" value="{{ trans('home_ad.export') }} Excel" name="export_slide" class="btn btn-success"> -->
-                                <button class="btn btn-outline-success" type="submit" name="export_slide">
-                                    <i class="fas fa-file-export" aria-hidden="true"></i> {{ trans('home_ad.export') }} Excel
-                                </button>
-                            </form>
-                        </tr>
-                        
-
-                    </table>
-                </div>
-            </div>
-            
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-            
-          </div>
-        </div>
-    </div>
+    <!-- Import/Export Excel modal removed -->
 
 
     <!-- Modal Add-->
@@ -282,7 +219,7 @@
                 </form>
             </div>
         </div>
-    </div> 
+    </div>
 
 <style type="text/css">
 
