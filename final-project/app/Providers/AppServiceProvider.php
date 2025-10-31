@@ -12,8 +12,8 @@ use App\Models\Bill;
 use App\Models\Cart;
 use App\Models\Post;
 use App\Models\Visitors;
-use Session;
-use Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
@@ -35,19 +35,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //cart
-        view()->composer('*',function($view){
-            if(Session('cart')){
-                if (Auth::check()) {
-                    $oldCart = Session::get('cart');
-                    $cart = new Cart($oldCart);
-                }elseif(Session::get('user_name_login')){
-                    $oldCart = Session::get('cart');
-                    $cart = new Cart($oldCart);
-                }
+        // cart: only build Cart object when session has 'cart' to avoid null/undefined access
+        view()->composer('*', function ($view) {
+            if (Session::has('cart')) {
+                $oldCart = Session::get('cart');
+                $cart = new Cart($oldCart);
 
-
-                $view->with(['cart'=>Session::get('cart'), 'product_cart'=>$cart->items,'totalPrice'=>$cart->totalPrice,'totalQty'=>$cart->totalQty, 'coupon'=>Session::get('coupon') ]);
+                $view->with([
+                    'cart' => $oldCart,
+                    'product_cart' => $cart->items,
+                    'totalPrice' => $cart->totalPrice,
+                    'totalQty' => $cart->totalQty,
+                    'coupon' => Session::get('coupon'),
+                ]);
             }
         });
 
@@ -79,7 +79,7 @@ class AppServiceProvider extends ServiceProvider
 
         // admin
         view()->composer('*',function($view){
-               
+
                 $loai_count = ProductType::all()->count();
                 $sp_count = Product::all()->count();
                 $nd_count = User::all()->count();
@@ -104,9 +104,9 @@ class AppServiceProvider extends ServiceProvider
 
                 // $now = Carbon::now('Asia/Ho_Chi_Minh');
                 $now = date('d-m-Y H:i:s');
-                
+
                 $view->with(
-                    [   
+                    [
                         'now'=>$now,
                         'loai_count'=>$loai_count,
                         'sp_count'=>$sp_count,
@@ -119,7 +119,7 @@ class AppServiceProvider extends ServiceProvider
                         'visitor_count'=>$visitor_count,
                     ]);
 
-                
+
 
         });
     }
