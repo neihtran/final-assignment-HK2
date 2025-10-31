@@ -7,14 +7,14 @@ use App\Models\Slide;
 use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\Customer;
-use App\Models\Social; 
-use App\Models\Account; 
-use Socialite; 
+use App\Models\Social;
+use App\Models\Account;
+use Laravel\Socialite\Facades\Socialite;
 
 
 use App\Models\User;
-use Session;
-use Hash;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 use Auth;
 use DB;
 use Validator;
@@ -27,7 +27,7 @@ class TaiKhoan_Controller extends Controller
         return Socialite::driver('google')->redirect();
     }
     public function callback_google(){
-        $users = Socialite::driver('google')->stateless()->user(); 
+        $users = Socialite::driver('google')->user();
         // return $users->id;
         $authUser = $this->findOrCreateUser($users,'google');
         // dd($authUser->user);
@@ -45,11 +45,11 @@ class TaiKhoan_Controller extends Controller
         }else{
             $resuft_tb = trans('home.hi', [], 'en');
         }
-        
+
 
         return redirect()->route('trang-chu')->with('thongbao', ''.$resuft_tb.', '.$account_name->full_name.' ');;
-      
-       
+
+
     }
     public function findOrCreateUser($users,$provider){
         $authUser = Social::where('provider_user_id', $users->id)->first();
@@ -57,7 +57,7 @@ class TaiKhoan_Controller extends Controller
 
             return $authUser;
         }
-      
+
         $soal = new Social([
             'provider_user_id' => $users->id,
             'provider' => strtoupper($provider)
@@ -82,7 +82,7 @@ class TaiKhoan_Controller extends Controller
         $account_name = Account::where('id',$soal->user)->first();
         Session::put('user_name_login',$account_name->full_name);
         Session::put('user_id_login',$account_name->id);
-        
+
         if(Session::get('locale') == 'vi' || Session::get('locale') == null){
             $resuft_tb = trans('home.hi', [], 'vi');
         }else{
@@ -139,23 +139,23 @@ class TaiKhoan_Controller extends Controller
 
     	Session::get('user_id_login');
     	$credentials = array('email'=>$req->email, 'password'=>$req->password);
-        if(Auth::attempt($credentials)){
+        if(Auth()->attempt($credentials)){
 
-            if (Auth::user()->level == 1) {
+            if (Auth()->user()->level == 1) {
 
-                Session::put('user_id_login', Auth::user()->id);
-                $name = Auth::user()->full_name;
+                Session::put('user_id_login', Auth()->user()->id);
+                $name = Auth()->user()->full_name;
                 return redirect()->route('trang-chu-admin')->with('thongbao', ''.$resuft_tb.', '.$name.' ');
             }else{
 
-                Session::put('user_id_login', Auth::user()->id);
-                $name = Auth::user()->full_name;
+                Session::put('user_id_login', Auth()->user()->id);
+                $name = Auth()->user()->full_name;
                 return redirect()->route('trang-chu')->with('thongbao', ''.$resuft_tb.', '.$name.' ');
             }
         }else{
             return redirect()->back()->with('thongbaoloi', ''.$resuft_tb_1.'');
         }
-    	
+
     }
     public function getDangKy(Request $req){
         $meta_desc = '';
@@ -205,11 +205,11 @@ class TaiKhoan_Controller extends Controller
 		$user->address = $req->adress;
 		$user->level = $req= 2;
 		$user->save();
-		return redirect()->route('dangnhap');  
+		return redirect()->route('dangnhap');
     }
 
     public function postDangXuat(){
-    	Auth::logout();
+    	Auth()->logout();
         Session::forget('cart');
         Session::forget('coupon');
         Session::forget('user_id_login');
@@ -220,7 +220,7 @@ class TaiKhoan_Controller extends Controller
 
     public function userUpdate1(Request $req)
     {
-        if (Auth::check()) {
+        if (Auth()->check()) {
             if(Session::get('locale') == 'vi' || Session::get('locale') == null){
                 $this->validate($req,
                 [
@@ -254,8 +254,8 @@ class TaiKhoan_Controller extends Controller
 
                 ]);
             }
-            $userUpdate =  User::find(Auth::user()->id );
-        
+            $userUpdate =  User::find(Auth()->user()->id );
+
             $userUpdate->full_name = $req->name;
             $userUpdate->address = $req->adress;
             $userUpdate->email = $req->email;
@@ -266,7 +266,7 @@ class TaiKhoan_Controller extends Controller
             $userUpdate->password = Hash::make($req->password);
 
             $userUpdate->save();
-            return redirect()->back()->with('thongbaoupdate', 'Update Successful');  
+            return redirect()->back()->with('thongbaoupdate', 'Update Successful');
         }
         else{
             return redirect()->back();

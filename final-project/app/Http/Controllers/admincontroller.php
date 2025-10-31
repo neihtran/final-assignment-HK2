@@ -302,7 +302,7 @@ class admincontroller extends Controller
             $slide->image = $filename;
         }else{
             return $req;
-            $slide->image = '';
+            // $slide->image = '';
         }
     $slide->status_slide = 0;
 
@@ -358,7 +358,7 @@ class admincontroller extends Controller
                     $slide_update->image = $filename;
                 }else{
                     return $req;
-                    $slide_update->image = '';
+                    // $slide_update->image = '';
                 }
 
                 // $slide_update->save();
@@ -406,10 +406,10 @@ class admincontroller extends Controller
             }
             ProductType::where('id', $id)->first()->delete();
             return redirect()->back()->with('thongbao', 'Xóa thành công!');
-            return redirect()->back();
+            // return redirect()->back();
         }
         return redirect()->back()->with('thongbao', 'Loại SP có chứa '.sizeof($sp1).' SP, Xóa KHÔNG thành công!');
-        return redirect()->back();
+        // return redirect()->back();
     }
 
     public function AddAdmin_NSX(Request $req){
@@ -449,7 +449,7 @@ class admincontroller extends Controller
             $nsx->image = $filename;
         }else{
             return $req;
-            $nsx->image = '';
+            // $nsx->image = '';
         }
 
 
@@ -503,7 +503,7 @@ class admincontroller extends Controller
                 $nsx_update->image = $filename;
             }else{
                 return $req;
-                $nsx_update->image = '';
+                // $nsx_update->image = '';
             }
 
             // $nsx_update->save();
@@ -653,7 +653,7 @@ class admincontroller extends Controller
             $sp->image = $filename;
         }else{
             return $req;
-            $sp->image = '';
+            // $sp->image = '';
         }
 
         $sp->save();
@@ -738,7 +738,7 @@ class admincontroller extends Controller
                     $sp_update->image = $filename;
                 }else{
                     return $req;
-                    $sp_update->image = '';
+                    // $sp_update->image = '';
                 }
                 // $sp_update->save();
 

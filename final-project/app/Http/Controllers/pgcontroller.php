@@ -257,10 +257,10 @@ class pgcontroller extends Controller
 
 
         //send mail lien he
-        $to_email =  "kq909981@gmail.com";
+        $to_email =  "thiennd.144010124006@vtc.edu.vn@gmail.com";
 
         $now = Carbon::now('Asia/Ho_Chi_Minh');
-        $tile_mail = "Liên Hệ từ ShopPv".' '.$now;
+        $tile_mail = "Liên Hệ từ neihTShop".' '.$now;
         $data['email'] = $req->email;
 
         $name_mail = $req->name;
@@ -442,7 +442,7 @@ class pgcontroller extends Controller
 
         //send mail xac nhan dat hang
         $now = Carbon::now('Asia/Ho_Chi_Minh');
-        $to_email =  "npn020899@gmail.com";
+        $to_email =  "thiennd.144010124006@vtc.edu.vn";
         $title_mail = 'Xác Nhận Đơn Hàng'. ' ' .$now;
         $data['email'][] = $customer->email;
 
@@ -845,7 +845,7 @@ class pgcontroller extends Controller
 
         //send mail xac nhan dat hang
         $now = Carbon::now('Asia/Ho_Chi_Minh');
-        $to_email =  "kq909981@gmail.com";
+        $to_email =  "thiennd.144010124006@vtc.edu.vn";
         $title_mail = 'Xác Nhận Đơn Hàng'. ' ' .$now;
         $data['email'][] = $customer->email;
 
